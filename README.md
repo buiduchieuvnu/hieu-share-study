@@ -1,2 +1,2 @@
-# hieu-share-study
-Repo chia sẻ project học tập
+# hieu-study-share
+Repo chia sẻ project học tập của Hiếu
