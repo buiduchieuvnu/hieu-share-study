@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>SpO2 Web Bluetooth API Example</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="app.js"></script>
+    <script>
+        var App = new App();
+    </script>
+</head>
+<body>
+    <h1 id="hAppName"></h1>
+    <fieldset class="ACTIONS">
+        <legend>Actions</legend>
+        <button id="btnClearLog">Clear</button>
+        <button id="btnGetDevice">Lấy danh sách thiết bị</button>    
+        <button id="btnConnect">Kết nối</button>    
+    </fieldset>
+    <fieldset class="FORM">
+        <legend>Logs</legend>
+        <textarea id="txtLog" cols="300" rows="30" style="width:100%; background-color: #3b3b3b; color: #FFF;"></textarea>
+    </fieldset>
+    
+    
+</body>
+
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>SpO2 Web Bluetooth API Example</title>
+</head>
+
+<body>
+    <button>Connect </button>
+    <script>
+        document.querySelector('button').addEventListener('click', () => {
+            const SERVICE_UUID = '00001523-1212-efde-1523-785feabcd123';
+            const DEVICE_NAME = 'TAIDOC TD8255';
+            navigator.bluetooth.requestDevice({
+                filters: [{
+                    name: DEVICE_NAME
+                }],
+                optionalServices: [SERVICE_UUID]
+            }).then(device => {
+                device.gatt.connect();
+                return device.gatt.connect();
+            })
+                .then(server => {
+                    return server.getPrimaryService(SERVICE_UUID);
+                })
+                .then(service => {
+                    // console.log(service.getCharacteristic('00001524-1212-efde-1523-785feabcd123'));
+                    // return service.getCharacteristic('00001524-1212-efde-1523-785feabcd123');
+                    return Promise.all([
+                        service.getCharacteristic('00001524-1212-efde-1523-785feabcd123')
+                        .then(handleHeartRateMeasurementCharacteristic),
+                    ]);
+                }).then(a=>{console.log(a)})
+                .catch(error => { console.error(error); });
+        });
+        function handleHeartRateMeasurementCharacteristic(characteristic) {
+            return characteristic.startNotifications()
+            .then(char => {
+                characteristic.addEventListener('characteristicvaluechanged',
+                                                onHeartRateChanged);
+            });
+            }
+
+            function onHeartRateChanged(event) {
+                const characteristic = event.target;
+                console.log(parseHeartRate(characteristic.value));
+            }
+            function parseHeartRate(data) {
+                const flags = data.getUint8(0);
+                const rate16Bits = flags & 0x1;
+                const result = {};
+                let index = 1;
+                if (rate16Bits) {
+                    result.heartRate = data.getUint16(index, /*littleEndian=*/true);
+                    index += 2;
+                } else {
+                    result.heartRate = data.getUint8(index);
+                    index += 1;
+                }
+                const contactDetected = flags & 0x2;
+                const contactSensorPresent = flags & 0x4;
+                if (contactSensorPresent) {
+                    result.contactDetected = !!contactDetected;
+                }
+                const energyPresent = flags & 0x8;
+                if (energyPresent) {
+                    result.energyExpended = data.getUint16(index, /*littleEndian=*/true);
+                    index += 2;
+                }
+                const rrIntervalPresent = flags & 0x10;
+                if (rrIntervalPresent) {
+                    const rrIntervals = [];
+                    for (; index + 1 < data.byteLength; index += 2) {
+                    rrIntervals.push(data.getUint16(index, /*littleEndian=*/true));
+                    }
+                    result.rrIntervals = rrIntervals;
+                }
+                return result;
+            }
+    </script>
+</body>
+
+</html>
