@@ -1,4 +1,4 @@
-# hieu-study-share
-Repo chia sẻ project học tập của Hiếu
+# Giới thiệu
+Repo phục vụ nghiên cứu
 
 ## Sample
