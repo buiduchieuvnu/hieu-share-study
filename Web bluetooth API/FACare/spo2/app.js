@@ -109,21 +109,179 @@ var App = function () {
                 that.log('ERROR | ' + error); });
     }
 
-    this.getListDevice = function() {
-        that.log('> Tìm kiếm các thiết bị Bluetooth gần bạn...');
+    this.getListDevice = function () {
+        that.log('> Quét thiết bị Bluetooth xung quanh...');
         navigator.bluetooth.getDevices()
-        .then(devices => {
-            that.log('  > Tìm thấy ' + devices.length + ' thiết bị Bluetooth');
-            that.log('  > Danh sách: ');
-          for (const device of devices) {
-            that.log('       >' + device.name );
-          }
-        })
-        .catch(error => {
-            that.log('Kết quả: ' + result);
-        });
-      }
+            .then(devices => {
+                that.log('  > Tìm thấy ' + devices.length + ' thiết bị Bluetooth');
+                if (devices.length > 0) {
+                    that.log('  > Danh sách: ');
+                    for (const device of devices) {
+                        that.log('       >' + device.name);
+                    }
+                }
+            })
+            .catch(error => {
+                that.log('Kết quả: ' + result);
+            });
+    }
 
+    /*
+    Hàm tra cứu thông tin thiết bị
+    */
+    this.getDeviceInfo = function () {
+        that.log('Requesting any Bluetooth Device...');
+        navigator.bluetooth.requestDevice({
+            // filters: [...] <- Prefer filters to save energy & show relevant devices.
+            acceptAllDevices: true,
+            optionalServices: ['device_information']
+        })
+            .then(device => {
+                that.log('Connecting to GATT Server...');
+                return device.gatt.connect();
+            })
+            .then(server => {
+                that.log('Getting Device Information Service...');
+                return server.getPrimaryService('device_information');
+            })
+            .then(service => {
+                that.log('Getting Device Information Characteristics...');
+                return service.getCharacteristics();
+            })
+            .then(characteristics => {
+                let queue = Promise.resolve();
+                let decoder = new TextDecoder('utf-8');
+                characteristics.forEach(characteristic => {
+                    switch (characteristic.uuid) {
+
+                        case BluetoothUUID.getCharacteristic('manufacturer_name_string'):
+                            queue = queue.then(_ => characteristic.readValue()).then(value => {
+                                that.log('> Manufacturer Name String: ' + decoder.decode(value));
+                            });
+                            break;
+
+                        case BluetoothUUID.getCharacteristic('model_number_string'):
+                            queue = queue.then(_ => characteristic.readValue()).then(value => {
+                                that.log('> Model Number String: ' + decoder.decode(value));
+                            });
+                            break;
+
+                        case BluetoothUUID.getCharacteristic('hardware_revision_string'):
+                            queue = queue.then(_ => characteristic.readValue()).then(value => {
+                                that.log('> Hardware Revision String: ' + decoder.decode(value));
+                            });
+                            break;
+
+                        case BluetoothUUID.getCharacteristic('firmware_revision_string'):
+                            queue = queue.then(_ => characteristic.readValue()).then(value => {
+                                that.log('> Firmware Revision String: ' + decoder.decode(value));
+                            });
+                            break;
+
+                        case BluetoothUUID.getCharacteristic('software_revision_string'):
+                            queue = queue.then(_ => characteristic.readValue()).then(value => {
+                                that.log('> Software Revision String: ' + decoder.decode(value));
+                            });
+                            break;
+
+                        case BluetoothUUID.getCharacteristic('system_id'):
+                            queue = queue.then(_ => characteristic.readValue()).then(value => {
+                                that.log('> System ID: ');
+                                that.log('  > Manufacturer Identifier: ' +
+                                    padHex(value.getUint8(4)) + padHex(value.getUint8(3)) +
+                                    padHex(value.getUint8(2)) + padHex(value.getUint8(1)) +
+                                    padHex(value.getUint8(0)));
+                                that.log('  > Organizationally Unique Identifier: ' +
+                                    padHex(value.getUint8(7)) + padHex(value.getUint8(6)) +
+                                    padHex(value.getUint8(5)));
+                            });
+                            break;
+
+                        case BluetoothUUID.getCharacteristic('ieee_11073-20601_regulatory_certification_data_list'):
+                            queue = queue.then(_ => characteristic.readValue()).then(value => {
+                                that.log('> IEEE 11073-20601 Regulatory Certification Data List: ' +
+                                    decoder.decode(value));
+                            });
+                            break;
+
+                        case BluetoothUUID.getCharacteristic('pnp_id'):
+                            queue = queue.then(_ => characteristic.readValue()).then(value => {
+                                that.log('> PnP ID:');
+                                that.log('  > Vendor ID Source: ' +
+                                    (value.getUint8(0) === 1 ? 'Bluetooth' : 'USB'));
+                                if (value.getUint8(0) === 1) {
+                                    that.log('  > Vendor ID: ' +
+                                        (value.getUint8(1) | value.getUint8(2) << 8));
+                                } else {
+                                    that.log('  > Vendor ID: ' +
+                                        getUsbVendorName(value.getUint8(1) | value.getUint8(2) << 8));
+                                }
+                                that.log('  > Product ID: ' +
+                                    (value.getUint8(3) | value.getUint8(4) << 8));
+                                that.log('  > Product Version: ' +
+                                    (value.getUint8(5) | value.getUint8(6) << 8));
+                            });
+                            break;
+
+                        default: that.log('> Unknown Characteristic: ' + characteristic.uuid);
+                    }
+                });
+                return queue;
+            })
+            .catch(error => {
+                that.log('Argh! ' + error);
+            });
+    }
+
+    this.discoverService = function () {
+        let optionalServices = '0x1523'
+            .split(/, ?/).map(s => s.startsWith('0x') ? parseInt(s) : s)
+            .filter(s => s && BluetoothUUID.getService);
+
+        that.log('Requesting any Bluetooth Device...');
+        navigator.bluetooth.requestDevice({
+            // filters: [...] <- Prefer filters to save energy & show relevant devices.
+            acceptAllDevices: true,
+            optionalServices: optionalServices
+        })
+            .then(device => {
+                that.log('Connecting to GATT Server...');
+                return device.gatt.connect();
+            })
+            .then(server => {
+                // Note that we could also get all services that match a specific UUID by
+                // passing it to getPrimaryServices().
+                that.log('Getting Services...');
+                return server.getPrimaryServices();
+            })
+            .then(services => {
+                that.log('Getting Characteristics...');
+                let queue = Promise.resolve();
+                services.forEach(service => {
+                    queue = queue.then(_ => service.getCharacteristics().then(characteristics => {
+                        that.log('> Service: ' + service.uuid);
+                        characteristics.forEach(characteristic => {
+                            that.log('>> Characteristic: ' + characteristic.uuid + ' ' +
+                                that.getSupportedProperties(characteristic));
+                        });
+                    }));
+                });
+                return queue;
+            })
+            .catch(error => {
+                that.log('ERROR! ' + error);
+            });
+    }
+
+    this.getSupportedProperties = function(characteristic) {
+        let supportedProperties = [];
+        for (const p in characteristic.properties) {
+          if (characteristic.properties[p] === true) {
+            supportedProperties.push(p.toUpperCase());
+          }
+        }
+        return '[' + supportedProperties.join(', ') + ']';
+      }
 
 
     // Events
@@ -146,6 +304,15 @@ var App = function () {
         $('.ACTIONS').on('click','#btnTD8255',function(){
 			that.btnTD8255();
 		});
+
+        $('.ACTIONS').on('click','#btnGetDeviceInfo',function(){
+			that.getDeviceInfo();
+		});
+
+        $('.ACTIONS').on('click','#btnDiscover',function(){
+			that.discoverService();
+		});
+        
 
 	});
 

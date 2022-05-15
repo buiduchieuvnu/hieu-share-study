@@ -36,3 +36,5 @@
 
 # Sample
 - Auto reconnect device: https://googlechrome.github.io/samples/web-bluetooth/automatic-reconnect.html
+
+- Lấy danh sách service & characteristic: https://googlechrome.github.io/samples/web-bluetooth/discover-services-and-characteristics.html?optionalServices=0x1234
