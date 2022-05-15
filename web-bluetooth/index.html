@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Example</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="app.js"></script>
+    <script>
+        if('serviceWorker' in navigator) {
+          navigator.serviceWorker.register('service-worker.js');
+        }
+      </script>
+    <script>
+        var App = new App();
+    </script>
+</head>
+<body>
+    <h1 id="hAppName"></h1>
+    <fieldset class="ACTIONS">
+        <legend>Tool test</legend>
+        <button id="btnClearLog">Clear</button>
+        <button id="btnCheck">Kiểm tra bluetooth trên thiết bị</button>
+        <button id="btnGetDevice">Quét thiết bị bluetooth</button>   
+        <button id="btnGetDeviceInfo">Tra thông tin thiết bị</button>     
+        <button id="btnConnect">Kết nối</button>  
+        <button id="btnDiscover" alt="Truy vấn thông tin Services & Characteristics của thiết bị">Discover Services & Characteristics</button>   
+    </fieldset>
+    <fieldset class="ACTIONS">
+        <legend>Thiết bị FACare</legend>
+        <button id="btnTD8255">TAIDOC TD8255 (SPO2)</button>   
+    </fieldset>
+    <fieldset class="FORM">
+        <legend>Logs</legend>
+        <textarea id="txtLog" cols="300" rows="30" style="width:100%; background-color: #3b3b3b; color: #FFF;"></textarea>
+    </fieldset>
+</body>
+
+</html>
