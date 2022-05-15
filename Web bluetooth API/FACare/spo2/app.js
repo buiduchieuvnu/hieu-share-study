@@ -81,7 +81,7 @@ var App = function () {
     }
 
     this.btnTD8255 = function () {
-        that.log('Bắt đầu kết nối thiết bị bluetooth...');
+        that.log('> Bắt đầu kết nối thiết bị bluetooth...');
         const SERVICE_UUID = '00001523-1212-efde-1523-785feabcd123';
         const DEVICE_NAME = 'TAIDOC TD8255';
         navigator.bluetooth.requestDevice({
@@ -96,11 +96,11 @@ var App = function () {
                 return server.getPrimaryService(SERVICE_UUID);
             }).then(service => {
                 console.log(service);
-                that.log('Tên thiết bị: ' + service.device.name + '; ID: ' + service.device.id);
-                that.log('Trạng thái kết nối: ' + service.device.gatt.connected);
+                that.log('  > Tên thiết bị: ' + service.device.name + '; ID: ' + service.device.id);
+                that.log('  > Trạng thái kết nối: ' + service.device.gatt.connected);
                 return service.getCharacteristic('00001524-1212-efde-1523-785feabcd123')
                 .then(result=>{
-                    that.log('Kết quả: ' + result);
+                    that.log('  > Kết quả: ' + result);
                     console.log(result);
                 })
 
