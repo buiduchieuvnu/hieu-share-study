@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>TD8255</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="td8255.js"></script>
+    <script>
+        var TD8255 = new TD8255();
+    </script>
+</head>
+<body>
+    <h1>FACare TD8255</h1>
+    <fieldset>
+        <legend>Status</legend>
+        Connected: <b style="color: red">No</b> | 
+        Notify: <b style="color: red">No</b> 
+    </fieldset>
+    <fieldset class="ACTIONS">
+        <legend>Actions</legend>
+        <button id="btnConnect">Connect</button>   
+        <button id="btnStartNotify">Start notify</button>   
+    </fieldset>
+    <fieldset>
+        <legend>Logs</legend>
+        <textarea id="txtLog" cols="300" rows="30" style="width:100%; background-color: #3b3b3b; color: #FFF;"></textarea>
+    </fieldset>
+</body>
+
+</html>

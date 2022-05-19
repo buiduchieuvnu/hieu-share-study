@@ -52,6 +52,8 @@ var FACare = function () {
 
     function handleNotifications(event) {
         that.log('notif value ...');
+        console.log('Event: ');
+        console.log(event);
         let value = event.target.value;
         let a = [];
         // Convert raw data bytes to hex values just for the sake of showing something.
