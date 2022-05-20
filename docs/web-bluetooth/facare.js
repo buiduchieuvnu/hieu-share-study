@@ -2,7 +2,7 @@ var FACare = function () {
 	// Properties
 	var that = this;
     this.LogContent = '';
-
+    var myCharacteristic;
     this.log = function (msg) {
         var datetime = '';
         var date = new Date();
@@ -19,7 +19,7 @@ var FACare = function () {
         that.log('Clear!');
 	}
 
-    this.notifSPO2 = function(){
+    this.connectSp02 = function(){
         const SERVICE_UUID = '00001523-1212-efde-1523-785feabcd123';
         const commandCharacteristicUUID = '00001524-1212-efde-1523-785feabcd123'
         const DEVICE_NAME = 'TAIDOC TD8255';
@@ -52,8 +52,7 @@ var FACare = function () {
 
     function handleNotifications(event) {
         that.log('notif value ...');
-        console.log('Event: ');
-        console.log(event);
+        console.log('notif value ...');
         let value = event.target.value;
         let a = [];
         // Convert raw data bytes to hex values just for the sake of showing something.
@@ -63,108 +62,35 @@ var FACare = function () {
           a.push('0x' + ('00' + value.getUint8(i).toString(16)).slice(-2));
         }
         that.log('> ' + a.join(' '));
+        console.log(a.join(' '));
       }
 
     this.readgetSPO2 = function(){
-        const SERVICE_UUID = '0000180a-0000-1000-8000-00805f9b34fb';
-        const commandCharacteristicUUID = '00002a2a-0000-1000-8000-00805f9b34fb'
-        const DEVICE_NAME = 'TAIDOC TD8255';
-        that.log('Tìm kiếm thiết bị...');
-        navigator.bluetooth.requestDevice({
-            filters: [{
-                name: DEVICE_NAME
-            }],
-            optionalServices: [SERVICE_UUID]
-        }).then(device => {
-            that.log('Bắt đầu lấy data từ thiết bị SPO2...');
-            device.gatt.connect();
-            return device.gatt.connect();
-        }).then(server => {
-            that.log('getPrimaryService...');
-            return server.getPrimaryService(SERVICE_UUID);
-        }).then(service => {
-            that.log("Getting Characteristic...");
-            // return service.getCharacteristic(commandCharacteristicUUID);
-            return Promise.all([
-                service.getCharacteristic(commandCharacteristicUUID).then(handleReadChanged)
-            ]);
-        })
-        // }).then(characteristic => {
-        //     that.log ("start read")
-        //     myCharacteristic = characteristic;
-        //     myCharacteristic.addEventListener('characteristicvaluechanged',
-        //     handleReadChanged);
-            
-        // })
-        .catch(error => { console.error(error); });
+        that.log ("start read")
+        myCharacteristic.addEventListener('characteristicvaluechanged',
+        handleReadChanged);
     }
 
     function handleReadChanged(event) {
         that.log("read value...")
+        console.log("read value...")
         let a = event;
         console.log(a);
       }
     
     this.writeSPO2 = function(){
-        const SERVICE_UUID = '00001523-1212-efde-1523-785feabcd123';
-        const commandCharacteristicUUID = '00001524-1212-efde-1523-785feabcd123'
-        const descriptor = '00002902-0000-1000-8000-00805f9b34fb'
-        const DEVICE_NAME = 'TAIDOC TD8255';
-        that.log('Tìm kiếm thiết bị...');
-        navigator.bluetooth.requestDevice({
-            filters: [{
-                name: DEVICE_NAME
-            }],
-            optionalServices: [SERVICE_UUID]
-        }).then(device => {
-            that.log('Bắt đầu lấy data từ thiết bị SPO2...');
-            device.gatt.connect();
-            return device.gatt.connect();
-        }).then(server => {
-            that.log('getPrimaryService...');
-            return server.getPrimaryService(SERVICE_UUID);
-        }).then(service => {
-            that.log("Getting Characteristic...");
-            return service.getCharacteristic(commandCharacteristicUUID);
-        }).then(characteristic => {
-            that.log('Getting Descriptor...');
-            return characteristic.getDescriptor(descriptor);
-        }).then(descriptor => {
-            that.log('Reading Descriptor...');
-            return descriptor.readValue();
-        })
-          .then(value => {
-            that.log(value);
-            console.log(value);
-            console.log(value.getUint8());
-          })
-        .catch(error => { console.error(error); });
+        binaryArray = [81, 97, 2, 0, 0, 0, 163, 7];
+        unit8 = new Uint8Array(binaryArray);
+        console.log(unit8);
+        myCharacteristic.writeValue(unit8);
+        
     }
 
     this.getDescriptorSPO2 = function(){
-        const SERVICE_UUID = '00001523-1212-efde-1523-785feabcd123';
-        const commandCharacteristicUUID = '00001524-1212-efde-1523-785feabcd123'
-        const DEVICE_NAME = 'TAIDOC TD8255';
-        that.log('Tìm kiếm thiết bị...');
-        navigator.bluetooth.requestDevice({
-            filters: [{
-                name: DEVICE_NAME
-            }],
-            optionalServices: [SERVICE_UUID]
-        }).then(device => {
-            that.log('Bắt đầu lấy data từ thiết bị SPO2...');
-            device.gatt.connect();
-            return device.gatt.connect();
-        }).then(server => {
-            that.log('getPrimaryService...');
-            return server.getPrimaryService(SERVICE_UUID);
-        }).then(service => {
-            that.log("Getting Characteristic...");
-            return service.getCharacteristic(commandCharacteristicUUID);
-        }).then(characteristic => {
-            that.log("Getting Descriptors...");
-            return characteristic.getDescriptors();
-        }).then(descriptors => {
+    
+        that.log("Getting Descriptors...");
+        myCharacteristic.getDescriptors()
+        .then(descriptors => {
             console.log(descriptors);
             that.log('> Descriptors: ' +
               descriptors.map(c => c.uuid).join('\n' + ' '.repeat(19)));
@@ -175,8 +101,8 @@ var FACare = function () {
     // Events
     $(document).ready(function () {
 
-		$('.ACTIONS').on('click','#btnNotifTD8255-SPO2',function(){
-			that.notifSPO2();
+		$('.ACTIONS').on('click','#btnConnectTD8255-SPO2',function(){
+			that.connectSp02();
 		});
         $('.ACTIONS').on('click','#btnReadTD8255-SPO2',function(){
 			that.readgetSPO2();
