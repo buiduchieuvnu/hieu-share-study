@@ -1,6 +1,6 @@
 var App = function () {
-	// Properties
-	var that = this;
+    // Properties
+    var that = this;
     this.BASE_UUID = '';
     this.SERVICE_UUID = '';
     this.CHAR_UUID = '';
@@ -8,7 +8,7 @@ var App = function () {
     this.LogContent = '';
     this.Characteristic = null;
     this.BluetoothDevice = null;
-
+    var mydata = [];
     this.log = function (msg) {
         var datetime = '';
         var date = new Date();
@@ -20,13 +20,13 @@ var App = function () {
             psconsole.scrollTop(psconsole[0].scrollHeight - psconsole.height());
     }
 
-    this.clearLog = function(){
+    this.clearLog = function () {
         that.LogContent = '';
         that.log('Clear!');
-	}
+    }
 
     // Kết nối thiết bị
-    this.connect = function(){
+    this.connect = function () {
         that.log('> Thiết lập cấu hình...');
         that.DEVICE_NAME = $('#DEVICE_NAME').val();
         that.BASE_UUID = $('#BASE_UUID').val();
@@ -36,7 +36,7 @@ var App = function () {
         that.log('  > CHAR_UUID: ' + that.CHAR_UUID);
         that.log(' > Bắt đầu kết nối...');
         navigator.bluetooth.requestDevice({
-            filters: [{name: that.DEVICE_NAME}],
+            filters: [{ name: that.DEVICE_NAME }],
             optionalServices: [that.SERVICE_UUID]
         }).then(device => {
             device.gatt.connect();
@@ -54,10 +54,10 @@ var App = function () {
             that.log('  > Connected');
             return characteristic;
         })
-        .catch(error => { console.log(error); that.log(error) });
+            .catch(error => { console.log(error); that.log(error) });
     }
 
-    this.checkConnect = function(){
+    this.checkConnect = function () {
         if (!that.BluetoothDevice) {
             that.log('  > Lỗi: Không có thiết bị đang kết nối bluetooth');
             return false;
@@ -80,7 +80,7 @@ var App = function () {
     }
 
     // Bắt đầu lắng nghe Notify từ thiết bị
-    this.startNotify = function(){
+    this.startNotify = function () {
         if (!that.checkConnect()) return -1;
 
         that.log('> Bắt đầu lắng nghe notify...');
@@ -89,7 +89,7 @@ var App = function () {
             that.Characteristic.addEventListener('characteristicvaluechanged',
                 handleNotifications);
         })
-        .catch(error => { console.log(error); that.log(error) });
+            .catch(error => { console.log(error); that.log(error) });
     }
 
     // Dừng lắng nghe Notify từ thiết bị
@@ -101,6 +101,8 @@ var App = function () {
             that.Characteristic.stopNotifications()
                 .then(_ => {
                     that.log('  > Đã dừng lắng nghe Notifications');
+                    mydata = [];
+                    document.getElementById("fa-heart").classList.remove("blink_me");
                     that.Characteristic.removeEventListener('characteristicvaluechanged',
                         handleNotifications);
                 })
@@ -116,13 +118,36 @@ var App = function () {
         console.log(event);
         let value = event.target.value;
         let a = [];
+        let count = 10;
+        let spo2 = 0;
+        let nhipTim = 0;
         // Convert raw data bytes to hex values just for the sake of showing something.
         // In the "real" world, you'd use data.getUint8, data.getUint16 or even
         // TextDecoder to process raw data bytes.
         for (let i = 0; i < value.byteLength; i++) {
-          a.push('0x' + ('00' + value.getUint8(i).toString(16)).slice(-2));
+            a.push('0x' + ('00' + value.getUint8(i).toString(16)).slice(-2));
+            if(i==2){
+                const a1 = '0x' + ('00' + value.getUint8(i).toString(16)).slice(-2);
+                spo2 = parseInt(a1, 16);
+            }
+            if(i==4){
+                const a2 = '0x' + ('00' + value.getUint8(i).toString(16)).slice(-2);
+                nhipTim = parseInt(a2, 16);
+            }
         }
+        console.log(a);
         that.log('> ' + a.join(' '));
+
+        document.getElementById("spo2").innerHTML= spo2;
+        document.getElementById("nhipTim").innerHTML= nhipTim;
+        if(count == 10){
+            mydata.push(160, 160, 160, 170, 160, 180, 120, 163, 160, 160, 155, 160, 160, 160, 160);
+            console.log(count);
+        }
+        count --;
+        if(count == 1){
+            count=10;
+        }
     }
 
     // Ghi dữ liệu vào thiết bị
@@ -139,34 +164,97 @@ var App = function () {
         var binaryArray = [byte1, byte2, byte3, byte4, byte5, byte6, byte7, byte8];
         var unit8 = new Uint8Array(binaryArray);
         that.log('  > Write data: ' + JSON.stringify(unit8));
-        that.Characteristic.writeValue(unit8);
+        that.Characteristic.writeValue(unit8).then(_=>{
+            setInterval(move, 100);
+            monitor();
+            document.getElementById("fa-heart").classList.add("blink_me");
+        });
     }
 
+    // heart rate monitor
+    var context;
+    var cntText;
+    var cnt = 0;
+    var start = 0;
+    function monitor() {
+        var myCanvas = document.getElementById("myCanvas");
+        context = myCanvas.getContext('2d');
+        cntText = document.getElementById("data");
+        context.fillStyle = "#737373";
+        context.fill();
 
+    }
+    function drawLine(x1, y1, x2, y2, color, lineWidth) {
+        context.beginPath();
+        context.moveTo(x1, y1);
+        context.lineTo(x2, y2);
+        context.strokeStyle = color;
+        context.lineWidth = lineWidth;
+        context.stroke();
+    }
+
+    function move() {
+        var j = 0;
+        var lastx = 0;
+        var lasty = 160;
+        var pos = 0;
+        cleareData();
+        start = cnt;
+        if (cnt > 120) {
+            start = 120;
+            pos = cnt - 120;
+        }
+        for (i = 0; i < start; i++) {
+            var p = i * 5;
+            drawLine(lastx, lasty, p, mydata[pos], "#008000", 2);
+            lastx = p;
+            lasty = mydata[pos];
+            pos++;
+        }
+        cnt = cnt + 1;
+    }
+
+    function cleareData() {
+        context.clearRect(0, 0, 600, 600);
+        for (i = 0; i < 600; i++) {
+
+            drawLine(i, 0, i, 300, "#CCCCCC", 0.2);
+            i = i + 19
+        }
+
+        for (i = 0; i < 300; i++) {
+
+            drawLine(0, i, 600, i, "#CCCCCC", 0.2);
+            i = i + 19
+        }
+        drawLine(0, 160, 600, 160, "#FF00FF", 0.2);
+    }
+    // setInterval(move, 100);
+    // monitor();
 
     // Events
     $(document).ready(function () {
 
-		$('.ACTIONS').on('click','#btnConnect',function(){
-			that.connect();
-		});
+        $('.ACTIONS').on('click', '#btnConnect', function () {
+            that.connect();
+        });
 
-        $('.ACTIONS').on('click','#btnDisconnect',function(){
-			that.disConnect();
-		});
+        $('.ACTIONS').on('click', '#btnDisconnect', function () {
+            that.disConnect();
+        });
 
-        $('.ACTIONS').on('click','#btnStartNotify',function(){
-			that.startNotify();
-		});
+        $('.ACTIONS').on('click', '#btnStartNotify', function () {
+            that.startNotify();
+        });
 
-        $('.ACTIONS').on('click','#btnStopNotify',function(){
-			that.stopNotify();
-		});
+        $('.ACTIONS').on('click', '#btnStopNotify', function () {
+            that.stopNotify();
+        });
 
-        $('.ACTIONS').on('click','#btnWrite',function(){
-			that.writeValue();
-		});
+        $('.ACTIONS').on('click', '#btnWrite', function () {
+            that.writeValue();
+        });
 
-	});
+    });
 
 }
