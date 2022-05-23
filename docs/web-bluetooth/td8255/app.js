@@ -9,13 +9,15 @@ var App = function () {
     this.Characteristic = null;
     this.BluetoothDevice = null;
     var mydata = [];
+    let count = 2;
+    var stopHeart = 0;
     this.log = function (msg) {
         var datetime = '';
         var date = new Date();
         datetime = date.toLocaleString('en-GB');
         that.LogContent += datetime + ' | ' + msg + `\r\n`;
-        $('#txtLog').val(that.LogContent);
-        var psconsole = $('#txtLog');
+        document.getElementById('txtLog').value=that.LogContent;
+        var psconsole = document.getElementById('txtLog');
         if (psconsole.length)
             psconsole.scrollTop(psconsole[0].scrollHeight - psconsole.height());
     }
@@ -27,12 +29,13 @@ var App = function () {
 
     // Kết nối thiết bị
     this.connect = function () {
+        mydata = [];
         that.log('> Thiết lập cấu hình...');
-        that.DEVICE_NAME = $('#DEVICE_NAME').val();
-        that.BASE_UUID = $('#BASE_UUID').val();
-        that.SERVICE_UUID = $('#SERVICE_UUID').val() + '-' + that.BASE_UUID;
+        that.DEVICE_NAME = document.getElementById('DEVICE_NAME').value;
+        that.BASE_UUID = document.getElementById('BASE_UUID').value;
+        that.SERVICE_UUID = document.getElementById('SERVICE_UUID').value + '-' + that.BASE_UUID;
         that.log('  > SERVICE_UUID: ' + that.SERVICE_UUID);
-        that.CHAR_UUID = $('#CHAR_UUID').val() + '-' + that.BASE_UUID;
+        that.CHAR_UUID = document.getElementById('CHAR_UUID').value + '-' + that.BASE_UUID;
         that.log('  > CHAR_UUID: ' + that.CHAR_UUID);
         that.log(' > Bắt đầu kết nối...');
         navigator.bluetooth.requestDevice({
@@ -69,20 +72,20 @@ var App = function () {
     this.disConnect = function () {
         that.log('> Ngắt kết nối thiết bị...');
         if (!that.checkConnect()) return;
-
         if (that.BluetoothDevice.gatt.connected) {
             that.BluetoothDevice.gatt.disconnect();
             that.BluetoothDevice = null;
             that.log('   > Đã ngắt kết nối thiết bị bluetooth');
+            stopMonitor();
         } else {
             that.log('   > Thiết bị đã ngắt kết nối.');
+            stopMonitor();
         }
     }
 
     // Bắt đầu lắng nghe Notify từ thiết bị
     this.startNotify = function () {
         if (!that.checkConnect()) return -1;
-
         that.log('> Bắt đầu lắng nghe notify...');
         that.Characteristic.startNotifications().then(_ => {
             that.log('  > Đang lắng nghe notify từ thiết bị...');
@@ -101,8 +104,7 @@ var App = function () {
             that.Characteristic.stopNotifications()
                 .then(_ => {
                     that.log('  > Đã dừng lắng nghe Notifications');
-                    mydata = [];
-                    document.getElementById("fa-heart").classList.remove("blink_me");
+                    stopMonitor();
                     that.Characteristic.removeEventListener('characteristicvaluechanged',
                         handleNotifications);
                 })
@@ -115,10 +117,8 @@ var App = function () {
     // Handle notify
     function handleNotifications(event) {
         that.log('> Notify: ');
-        console.log(event);
         let value = event.target.value;
         let a = [];
-        let count = 10;
         let spo2 = 0;
         let nhipTim = 0;
         // Convert raw data bytes to hex values just for the sake of showing something.
@@ -135,51 +135,61 @@ var App = function () {
                 nhipTim = parseInt(a2, 16);
             }
         }
-        console.log(a);
         that.log('> ' + a.join(' '));
 
         document.getElementById("spo2").innerHTML= spo2;
         document.getElementById("nhipTim").innerHTML= nhipTim;
-        if(count == 10){
+        if(count == 2){
             mydata.push(160, 160, 160, 170, 160, 180, 120, 163, 160, 160, 155, 160, 160, 160, 160);
-            console.log(count);
         }
         count --;
         if(count == 1){
-            count=10;
+            count=2;
+        }
+        if(stopHeart==1){
+            startMonitor();
         }
     }
 
     // Ghi dữ liệu vào thiết bị
     this.writeValue = function () {
         that.log('> Ghi dữ liệu vào thiết bị');
-        var byte1 = parseInt($('#byte1').val(), 16);
-        var byte2 = parseInt($('#byte2').val(), 16);
-        var byte3 = parseInt($('#byte3').val(), 16);
-        var byte4 = parseInt($('#byte4').val(), 16);
-        var byte5 = parseInt($('#byte5').val(), 16);
-        var byte6 = parseInt($('#byte6').val(), 16);
-        var byte7 = parseInt($('#byte7').val(), 16);
-        var byte8 = parseInt($('#byte8').val(), 16);
+        var byte1 = parseInt(document.getElementById('byte1').value, 16);
+        var byte2 = parseInt(document.getElementById('byte2').value, 16);
+        var byte3 = parseInt(document.getElementById('byte3').value, 16);
+        var byte4 = parseInt(document.getElementById('byte4').value, 16);
+        var byte5 = parseInt(document.getElementById('byte5').value, 16);
+        var byte6 = parseInt(document.getElementById('byte6').value, 16);
+        var byte7 = parseInt(document.getElementById('byte7').value, 16);
+        var byte8 = parseInt(document.getElementById('byte8').value, 16);
         var binaryArray = [byte1, byte2, byte3, byte4, byte5, byte6, byte7, byte8];
         var unit8 = new Uint8Array(binaryArray);
         that.log('  > Write data: ' + JSON.stringify(unit8));
         that.Characteristic.writeValue(unit8).then(_=>{
-            setInterval(move, 100);
-            monitor();
-            document.getElementById("fa-heart").classList.add("blink_me");
+            startMonitor();
         });
     }
 
     // heart rate monitor
     var context;
-    var cntText;
     var cnt = 0;
     var start = 0;
+    function startMonitor(){
+        cnt = 0;
+        start = 0;
+        stopHeart = 0;
+        move();
+        monitor();
+        document.getElementById("fa-heart").classList.add("blink_me");
+    }
+    function stopMonitor(){
+        mydata = [];
+        stopHeart = 1;
+        document.getElementById("fa-heart").classList.remove("blink_me");
+    }
     function monitor() {
         var myCanvas = document.getElementById("myCanvas");
         context = myCanvas.getContext('2d');
-        cntText = document.getElementById("data");
         context.fillStyle = "#737373";
         context.fill();
 
@@ -194,24 +204,26 @@ var App = function () {
     }
 
     function move() {
-        var j = 0;
-        var lastx = 0;
-        var lasty = 160;
-        var pos = 0;
-        cleareData();
-        start = cnt;
-        if (cnt > 120) {
-            start = 120;
-            pos = cnt - 120;
+        if(mydata.length > 0){
+            var j = 0;
+            var lastx = 0;
+            var lasty = 160;
+            var pos = 0;
+            cleareData();
+            start = cnt;
+            if (cnt > 120) {
+                start = 120;
+                pos = cnt - 120;
+            }
+            for (i = 0; i < start; i++) {
+                var p = i * 5;
+                drawLine(lastx, lasty, p, mydata[pos], "#008000", 2);
+                lastx = p;
+                lasty = mydata[pos];
+                pos++;
+            }
+            cnt = cnt + 1;
         }
-        for (i = 0; i < start; i++) {
-            var p = i * 5;
-            drawLine(lastx, lasty, p, mydata[pos], "#008000", 2);
-            lastx = p;
-            lasty = mydata[pos];
-            pos++;
-        }
-        cnt = cnt + 1;
     }
 
     function cleareData() {
@@ -229,32 +241,32 @@ var App = function () {
         }
         drawLine(0, 160, 600, 160, "#FF00FF", 0.2);
     }
-    // setInterval(move, 100);
+    setInterval(move, 80);
     // monitor();
 
     // Events
-    $(document).ready(function () {
+    // $(document).ready(function () {
 
-        $('.ACTIONS').on('click', '#btnConnect', function () {
-            that.connect();
-        });
+    //     $('.ACTIONS').on('click', '#btnConnect', function () {
+    //         that.connect();
+    //     });
 
-        $('.ACTIONS').on('click', '#btnDisconnect', function () {
-            that.disConnect();
-        });
+    //     $('.ACTIONS').on('click', '#btnDisconnect', function () {
+    //         that.disConnect();
+    //     });
 
-        $('.ACTIONS').on('click', '#btnStartNotify', function () {
-            that.startNotify();
-        });
+    //     $('.ACTIONS').on('click', '#btnStartNotify', function () {
+    //         that.startNotify();
+    //     });
 
-        $('.ACTIONS').on('click', '#btnStopNotify', function () {
-            that.stopNotify();
-        });
+    //     $('.ACTIONS').on('click', '#btnStopNotify', function () {
+    //         that.stopNotify();
+    //     });
 
-        $('.ACTIONS').on('click', '#btnWrite', function () {
-            that.writeValue();
-        });
+    //     $('.ACTIONS').on('click', '#btnWrite', function () {
+    //         that.writeValue();
+    //     });
 
-    });
+    // });
 
 }
