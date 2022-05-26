@@ -27,71 +27,38 @@ var App = function () {
         that.log('Clear!');
     }
 
-    // test
-    this.connect = function () {
-        let filters = [];
-      
-        
-      
-       const filterName = "TAIDOC TD8255";
-        filters.push({name: filterName});
-        let options = {};
-        options.filters = filters;
-      
-        that.log('Requesting Bluetooth Device...');
-        that.log('with ' + JSON.stringify(options));
-        navigator.bluetooth.requestDevice(options)
-        .then(device => {
-                    device.gatt.connect();
-                    that.BluetoothDevice = device;
-                    return device.gatt.connect();
-                }).then(server => {
-                    that.log('  > Load PrimaryServic...');
-                    return server.getPrimaryService(that.SERVICE_UUID);
-                }).then(service => {
-                    that.log("  > Load Characteristic ...");
-                    return service.getCharacteristic(that.CHAR_UUID);
-                }).then(characteristic => {
-                    that.Characteristic = characteristic;
-                    console.log(characteristic);
-                    that.log('  > Connected');
-                    return characteristic;
-                })
-                    .catch(error => { console.log(error); that.log(error) });
-      }
-
     // Kết nối thiết bị
-    // this.connect = function () {
-    //     mydata = [];
-    //     that.log('> Thiết lập cấu hình...');
-    //     that.DEVICE_NAME = document.getElementById('DEVICE_NAME').value;
-    //     that.BASE_UUID = document.getElementById('BASE_UUID').value;
-    //     that.SERVICE_UUID = document.getElementById('SERVICE_UUID').value + '-' + that.BASE_UUID;
-    //     that.log('  > SERVICE_UUID: ' + that.SERVICE_UUID);
-    //     that.CHAR_UUID = document.getElementById('CHAR_UUID').value + '-' + that.BASE_UUID;
-    //     that.log('  > CHAR_UUID: ' + that.CHAR_UUID);
-    //     that.log(' > Bắt đầu kết nối...');
-    //     navigator.bluetooth.requestDevice({
-    //         filters: [{ name: that.DEVICE_NAME }],
-    //         optionalServices: [that.SERVICE_UUID]
-    //     }).then(device => {
-    //         device.gatt.connect();
-    //         that.BluetoothDevice = device;
-    //         return device.gatt.connect();
-    //     }).then(server => {
-    //         that.log('  > Load PrimaryServic...');
-    //         return server.getPrimaryService(that.SERVICE_UUID);
-    //     }).then(service => {
-    //         that.log("  > Load Characteristic ...");
-    //         return service.getCharacteristic(that.CHAR_UUID);
-    //     }).then(characteristic => {
-    //         that.Characteristic = characteristic;
-    //         console.log(characteristic);
-    //         that.log('  > Connected');
-    //         return characteristic;
-    //     })
-    //         .catch(error => { console.log(error); that.log(error) });
-    // }
+    this.connect = function () {
+        mydata = [];
+        that.log('> Thiết lập cấu hình...');
+        that.DEVICE_NAME = document.getElementById('DEVICE_NAME').value;
+        that.BASE_UUID = document.getElementById('BASE_UUID').value;
+        that.SERVICE_UUID = document.getElementById('SERVICE_UUID').value + '-' + that.BASE_UUID;
+        that.log('  > SERVICE_UUID: ' + that.SERVICE_UUID);
+        that.CHAR_UUID = document.getElementById('CHAR_UUID').value + '-' + that.BASE_UUID;
+        that.log('  > CHAR_UUID: ' + that.CHAR_UUID);
+        that.log(' > Bắt đầu kết nối...');
+        navigator.bluetooth.requestDevice({
+            filters: [{ name: that.DEVICE_NAME }],
+            optionalServices: [that.SERVICE_UUID]
+        }).then(device => {
+            device.gatt.connect();
+            that.BluetoothDevice = device;
+            return device.gatt.connect();
+        }).then(server => {
+            that.log('  > Load PrimaryServic...');
+            return server.getPrimaryService(that.SERVICE_UUID);
+        }).then(service => {
+            that.log("  > Load Characteristic ...");
+            return service.getCharacteristic(that.CHAR_UUID);
+        }).then(characteristic => {
+            that.Characteristic = characteristic;
+            console.log(characteristic);
+            that.log('  > Connected');
+            return characteristic;
+        })
+            .catch(error => { console.log(error); that.log(error) });
+    }
 
     this.checkConnect = function () {
         if (!that.BluetoothDevice) {
