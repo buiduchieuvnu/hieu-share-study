@@ -39,8 +39,8 @@ var App = function () {
         that.log('  > CHAR_UUID: ' + that.CHAR_UUID);
         that.log(' > Bắt đầu kết nối...');
         navigator.bluetooth.requestDevice({
-            filters: [{ name: that.DEVICE_NAME }],
-            optionalServices: [that.SERVICE_UUID]
+            // optionalServices: [that.SERVICE_UUID],
+            filters: [{ name: that.DEVICE_NAME }]
         }).then(device => {
             device.gatt.connect();
             that.BluetoothDevice = device;
