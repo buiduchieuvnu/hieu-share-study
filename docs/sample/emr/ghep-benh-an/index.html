@@ -1,0 +1,43 @@
+<html>
+   <head>
+      <style>
+         @media print {
+         .pagebreak {
+            page-break-before: always;
+         }
+         .page{
+            width: 100%;
+            height: 29.7cm;
+            padding: 1.52cm 1.52cm 0.51cm 1.02cm;
+            border: none;
+            position: relative;
+         }
+         /* page-break-after works, as well */
+         }
+         iframe {
+            width: 100%;
+         }
+      </style>
+      <script type="text/javascript">
+         function resizeIframe(iframe) {
+             iframe.height = iframe.contentWindow.document.body.offsetHeight  + "px";
+             window.requestAnimationFrame(() => resizeIframe(iframe));
+         }
+      </script>
+   </head>
+   <body style="margin:0px;padding:0px">
+      <iframe onload="resizeIframe(this)" src="104300120220617105957.html" seamless="seamless" scrolling="no" frameBorder="0"></iframe>
+      <div class='pagebreak'> </div>
+      <iframe onload="resizeIframe(this)" src="104300220220617105957.html" seamless="seamless" scrolling="no" frameBorder="0"></iframe>
+      <div class='pagebreak'> </div>
+      <iframe onload="resizeIframe(this)" src="104300320220617105957.html" seamless="seamless" scrolling="no" frameBorder="0"></iframe>
+      <div class='pagebreak'> </div>
+      <iframe onload="resizeIframe(this)" src="104300620220617105957.html" seamless="seamless" scrolling="no" frameBorder="0"></iframe>
+      <div class='pagebreak'> </div>
+      <iframe onload="resizeIframe(this)" src="104300820220617105957.html" seamless="seamless" scrolling="no" frameBorder="0"></iframe>
+      <div class='pagebreak'> </div>
+      <iframe onload="resizeIframe(this)" src="104300520220617105957.html" seamless="seamless" scrolling="no" frameBorder="0"></iframe>
+      <div class='pagebreak'> </div>
+      <iframe onload="resizeIframe(this)" src="104300720220617105957.html" seamless="seamless" scrolling="no" frameBorder="0"></iframe>
+   </body>
+</html>

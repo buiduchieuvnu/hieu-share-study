@@ -1,0 +1,604 @@
+<html> <head>   <meta charset='UTF-8'>   <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>   <style>    
+    html { font-size: 14px;  font-family: 'Times New Roman', Times, serif !important; }
+    body { font-size: 14px;  font-family: 'Times New Roman', Times, serif !important; }
+    .menu-fix{
+        position: absolute;
+        width: 100px;
+        right: -180;
+    }
+    .menu-fix a{
+        text-decoration: none;
+        color: black;
+    }
+	.menu-fix button{
+        margin: 5px;
+		padding: 2px;
+    }
+    #view {
+        background: #e6e6e6 !important;
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+	input{
+		 width: 100%;
+		 padding: 0px;
+	}
+   .container label{
+        margin-bottom: 0px;
+        display: inline-block;
+    }
+    @media print {
+		.page{
+			border:0px !important;
+			padding:0px !important;
+			page-break-inside: avoid;
+		}
+        .menu-fix{
+            display: none;
+        }
+	}
+	.kyso{
+	position: relative;
+}
+.da-ky {
+		height: 110px;
+		position: absolute;
+		right: 1cm;
+		top: 30px;
+		opacity: 0.9;
+    }
+    .nguoi-ky {
+        font-size: 9pt;
+        font-weight: 600;
+        position: absolute;
+        color: #dc3545;
+        left: 2cm;
+        top: 1.75cm;
+        z-index: 1;
+    }
+    #ngay-ky {
+        font-size: 9pt;
+        font-weight: 600;
+        position: absolute;
+        color: #dc3545;
+        left: 2cm;
+        top: 2.5cm;
+        z-index: 1;
+    }
+    .da-ky-sm {
+		height: 85px;
+		position: absolute;
+		left: 0.5cm;
+		top: 30px;
+		opacity: 0.9;
+    }
+    .nguoi-ky-sm {
+        font-size: 8pt;
+        font-weight: 600;
+        position: absolute;
+        color: #dc3545;
+        left: 0.75cm;
+        top: 1.75cm;
+        z-index: 1;
+    }
+    #ngay-ky-sm {
+        font-size: 8pt;
+        font-weight: 600;
+        position: absolute;
+        color: #dc3545;
+        left: 0.75cm;
+        top: 2.25cm;
+        z-index: 1;
+    }
+	.sign-border{
+		height: 175px;
+        width: 90px;
+        position: absolute;
+        right: -20px;
+        top: -20px;
+		border: 1px solid rgb(12, 192, 12);
+		-webkit-transform: rotate(-50deg);
+		-moz-transform: rotate(-50deg);
+		-ms-transform: rotate(-50deg);
+		-o-transform: rotate(-50deg);
+		transform: rotate(-50deg);
+		-webkit-transform-origin: 0 100%;
+		-moz-transform-origin: 0 100%;
+		-ms-transform-origin: 0 100%;
+		-o-transform-origin: 0 100%;
+		transform-origin: 0 100%;
+		margin: 60px 0 10px 310px;
+	}
+	h4,h3{
+		margin: 5px;
+        font-size: 17pt;
+        font-weight: bold;
+	}
+	.text-checkbox{
+		font-size: 10pt;
+	}
+    .title{
+        font-weight: bold;
+        font-size: 13pt;
+    }
+    .title-2{
+        font-weight: bold;
+        font-size: 14pt;
+    }
+	.container{
+		width: 21cm;
+		/* padding: 1.52cm 0.5cm 0.51cm 1.02cm; */
+		margin: auto;
+		/* box-shadow: 0 0 0.5cm rgba(0,0,0,0.5); */
+		font-size: 11pt;
+        /* border: 1px solid rgba(0,0,0,0.5); */
+        background: #fff;
+        padding: 0px;
+        color: #212529;
+        position: relative;
+	}
+    .page{
+        width: 100%;
+        padding: 0.706cm 0.706cm 0.706cm 0.706cm;
+        border: 1px solid #a9aaac;
+		position: relative;
+    }
+	.page-number{
+		position: absolute;
+		right: 30px;
+		bottom: 10px;
+		color: gray;
+	}
+    .break-page{
+        height: 0.4cm;
+        width: 100%;
+    }
+    .bold{
+        font-weight: bold;
+    }
+    .border-a{
+        border: 1px solid #333333;
+        text-align: center;
+    }
+	.input-xs{
+		width: 15px;
+        text-align: center;
+	}
+	.input-sm{
+		width: 30px;
+        text-align: center;
+	}
+
+    .input-lg{
+        width: 50px;
+        text-align: center;
+    }
+    .input-xl{
+        width: 70px;
+        text-align: center;
+    }
+	.input-1{
+		width: 100px;
+	}
+	.input-2{
+		width: 150px;
+	}
+	.input-3{
+		width: 200px;
+	}
+	.input-4{
+		width: 250px;
+	}
+	.input-5{
+		width: 300px;
+	}
+	.input-6{
+		width: 350px;
+	}
+	.input-7{
+		width: 500px;
+	}
+	.check-box{
+		height: 18px;
+		width: 18px;
+        border: 1px solid #333333;
+        text-align: center;
+        display: inline-block;
+		vertical-align: bottom;
+		margin-bottom: 0px;
+	}
+	.lable{
+		 font-size: 1rem;
+		 float: right;
+	}
+    td{
+        padding: 0px !important;
+    }
+	.table{
+		width: 100%;
+        margin-bottom: 0px;
+	}
+	.table td{
+		border: 0px;
+	}
+	.table-border{
+		border: 1px solid #333333;
+		border-collapse: collapse;
+	}
+	.table-border td{
+		border: 1px solid #333333;
+		border-collapse: collapse;
+		vertical-align: top !important;
+        padding-left: 0.25rem !important;
+        height: 30px;
+	}
+	.table-border th{
+		border: 1px solid #333333;
+		border-collapse: collapse;
+	}
+	.table-none td{
+		border: 0px !important;
+        padding-left: 0px !important;
+	}
+	.text-transform{
+		text-transform: uppercase;
+	}
+	.text-center{
+		text-align: center;
+	}
+    .text-center td{
+		text-align: center;
+	}
+    .ml-00{
+        margin-left: -4px;
+    }
+    .ml-0{
+        margin-left: 0px;
+    }
+	.ml-1{
+		margin-left: 5px;
+	}
+	.ml-2{
+		margin-left: 10px;
+	}
+	.ml-3{
+		margin-left: 15px;
+	}
+	.ml-4{
+		margin-left: 20px;
+	}
+
+	.ml-5{
+		margin-left: 25px;
+	}
+	.ml-6{
+		margin-left: 30px;
+	}
+    .mr-0{
+        margin-right: 0px;
+    }
+	.mr-1{
+		margin-right: 5px;
+	}
+	.mr-2{
+		margin-right: 10px;
+	}
+	.mr-3{
+		margin-right: 15px;
+	}
+	.mr-4{
+		margin-right: 20px;
+	}
+
+	.mr-5{
+		margin-right: 30px;
+	}
+	.mr-6{
+		margin-right: 50px;
+	}
+	.text-sm{
+		font-size: 11pt;
+	}
+	.text-left{
+		text-align: left;
+	}
+	.text-center{
+		text-align: center !important;
+	}
+	.div-position{
+		position: relative;
+	}
+	.position-right{
+		position: absolute;
+    	right: 5px;
+	}
+	.right-1{
+		position: absolute;
+    	right: 0px;
+	}
+	.right-2{
+		position: absolute;
+    	right: 5px;
+	}
+    .right-2x{
+		position: absolute;
+    	right: 40px;
+	}
+	.right-3{
+		position: absolute;
+    	right: 15px;
+	}
+	.right-4{
+		position: absolute;
+    	right: 20px;
+	}
+	.right-5{
+		position: absolute;
+    	right: 25px;
+	}
+	.right-6{
+		position: absolute;
+    	right: 35px;
+	}
+    .top-0{
+        position: absolute;
+        top: 0px;
+    }
+    .top-0x{
+        position: absolute;
+        top: 25px;
+    }
+    .bl-0{
+        border-left:0px;
+    }
+    .br-0{
+        border-right:0px;
+    }
+    .height-1{
+        height: 25px;
+    }
+	.height-1-xl{
+        height: 30px;
+    }
+    .height-2{
+        height: 50px;
+    }
+    .height-3{
+        height: 75px;
+    }
+    .height-4{
+        height: 100px;
+    }
+    .height-5{
+        height: 125px;
+    }
+    .height-6{
+        height: 150px;
+    }
+    .height-7{
+        height: 175px;
+    }
+    .height-8{
+        height: 200px;
+    }
+    .height-9{
+        height: 225px;
+    }
+	.height-10{
+		height: 250px;
+	}
+    .height-1-sm{
+        height: 18px;
+    }
+    .height-1-xs{
+        height: 10px;
+    }
+    .height-1-xss{
+        height: 5px;
+    }
+    .height-2-sm{
+        height: 44px;
+    }
+    .height-3-sm{
+        height: 66px;
+    }
+	.italic{
+        font-style: italic;
+    }
+    .w-100{
+        width: 100%;
+    }
+    .size-9{
+        font-size: 9pt;
+    }
+    .size-10{
+        font-size: 10pt;
+    }
+    .size-11{
+        font-size: 11pt;
+    }
+    .size-12{
+        font-size: 12pt;
+    }
+    .size-13{
+        font-size: 13pt;
+    }
+    .size-14{
+        font-size: 14pt;
+    }
+    .size-16{
+        font-size: 16pt;
+    }
+    .size-18{
+        font-size: 18pt;
+    }
+    .size-20{
+        font-size: 20pt;
+    }
+    .table-mat td{
+        padding: 2px 2px 0px 5px !important;
+    }
+</style> </head>  <body>   <div class='container ' id='TPL_PAGE'>    <!-- header -->    <!-- <div class='break-page'></div> -->    <div class='menu-fix' id='menu'>     <button id='print' onclick='window.print()'><i class='fa fa-print'></i> In ấn</button>     <button id='exportPdf'><i class='fa fa-file-pdf-o'></i> Xuất PDF</button>     <button><a id='exportWord' target='_blank' href='#'><i class='fa fa-file-word-o'></i> Xuất Word</a></button>     <button id='exportWordClient' onclick='exportHTML()'> Xuất Word Client</button>     <button><a id='exportExcel' target='_blank' href='#'><i class='fa fa-file-excel-o'></i> Xuất Excel</a></button>     <br>    <br>    </div>    <div class='page'>     <table class='table table-none'>      <tbody>      <tr>        <td style='width: 38%'> <label>TẬP ĐOÀN BC - VT VIỆT NAM</label> </td>        <td rowspan='3'> <h4 class='text-transform text-center' style='font-size:18pt'>BỆNH ÁN NỘI KHOA</h4> </td>        <td style='width: 25%'> Số lưu trữ: <label class='RCA size-12'>.............................</label> </td>       </tr>       <tr>        <td><label class='text-transform'>BỆNH VIỆN BƯU ĐIỆN</label> </td>        <td class='size-12'> <label>Mã y tế....../......../......../........ </label> <label type='text' id='maYTe'></label> </td>       </tr>       <tr>        <td> <label class='text-transform'>Khoa: KHOA NGOẠI TỔNG HỢP (ĐC)</label> <label class='ml-6'>Giường: </label> </td>       </tr>       <tr class='height-1'></tr>      </tbody>    </table>     <!-- content -->     <div class='hanhchinh'>      <label class='text-transform title'>I. Hành chính</label>      <table class='table size-12'>       <tbody>       <tr>         <td style='width: 50%'> <label>1. Họ và tên <span>(In hoa)</span>:</label> <label type='text' class='text-transform ml-4' id='hoVaTen'>LÊ ANH </label> </td>         <td style='width: 50%' class='div-position'>          <lable>          2. Ngày sinh         </lable> <label type='text' class='check-box'>1 </label> <label type='text' class='check-box'>6 </label> <label type='text' class='check-box'>1 </label> <label type='text' class='check-box'>1 </label> <label type='text' class='check-box'>1 </label> <label type='text' class='check-box'>9 </label> <label type='text' class='check-box'>9 </label> <label type='text' class='check-box'>6 </label> <label style='position:absolute;top:-20px;right:15px'>Tuổi</label>          <div style='position:absolute; right:5px; top:0'>           <label type='text' class='check-box'> 2 </label>           <label type='text' class='check-box'> 5 </label>          </div> </td>        </tr>        <tr>         <td style='width: 50%'>          <table class='table'>           <tbody>           <tr>             <td><label>3. Giới: </label></td>             <td>1. Nam <label type='text' class='check-box'></label></td>             <td>2. Nữ <label type='text' class='check-box'>X</label></td>            </tr>           </tbody>         </table> </td>         <td class='div-position'> <label>4. Nghề nghiệp: </label> <label type='text' class='input-3'>Nông dân </label>          <div class='right-2 top-0'>           <label type='text' class='check-box'>0 </label>           <label type='text' class='check-box'>5 </label>          </div> </td>        </tr>        <tr>         <td style='width: 50%'> <label>5. Dân tộc: </label> <label type='text' class='input-3 ml-3 mr-6'>Kinh</label> <label type='text' class='check-box'>2 </label> <label type='text' class='check-box'>5 </label> </td>         <td style='width: 50%' class='div-position'> <label>6. Ngoại kiều: </label> <label type='text' class='input-3'></label>          <div class='right-2 top-0'>           <label type='text' class='check-box'>0 </label>           <label type='text' class='check-box'>0 </label>          </div> </td>        </tr>        <tr>         <td> <label>7. Địa chỉ: Số nhà/Thôn, phố:</label> <label type='text'> </label> </td>         <td> <label>Xã, phường:</label> <label type='text' class='input-4'>Thị trấn Tây Đằng</label> </td>        </tr>        <tr>         <td style='width: 50%'> <label>Huyện (Q, Tx): </label> <label type='text' class='input-3 mr-5'>Huyện Ba Vì</label> <label type='text' class='input-lg border-a height-1-sm'> 271 </label> </td>         <td style='width: 50%' class='div-position'> <label>Tỉnh, thành phố: </label> <label type='text' class='input-3'>TP Hà Nội</label>          <div class='right-2 top-0'>           <label type='text' class='input-lg border-a height-1-sm'>01 </label>          </div> </td>        </tr>       </tbody>     </table>      <table class='table size-12'>       <tbody>       <tr>         <td style='width: 45%'> <label>8. Nơi làm việc:</label> <label></label> </td>         <td style='width: 55%'> <label>9. Đối tượng: </label> <span class='text-checkbox'>1. BHYT</span> <label class='check-box'>X</label> <span class='text-checkbox ml-1'>2. Thu phí</span> <label class='check-box'></label> <span class='text-checkbox ml-1'>3. Miễn phí</span> <label class='check-box'></label> <span class='text-checkbox ml-1'>4. Khác</span> <label class='check-box'></label> </td>        </tr>        <tr>         <td style='width: 45%'> <label class='mr-4'>10. BHYT giá trị đến </label>ngày <label class='input-xs text-center'>31</label> <label>tháng</label> <label class='input-xs text-center'>12</label> <label>năm</label> <label class='input-xs text-center'>2021</label> </td>         <td style='width: 55%'> <label>Số thẻ BHYT: </label> <label type='text' class='input-sm border-a ml-6 height-1-sm'>DN</label> <label type='text' class='input-sm border-a height-1-sm'>4</label> <label type='text' class='input-sm border-a height-1-sm'>01</label> <label type='text' class='input-sm border-a height-1-sm'>53</label> <label type='text' class='input-lg border-a height-1-sm'>645</label> <label type='text' class='input-xl border-a height-1-sm'>64319</label> </td>        </tr>        <tr>         <td colspan='2'> <label>11. Họ tên, địa chỉ người nhà khi cần báo tin: </label> <label> </label> <label>Điện thoại số: </label> <label type='text' class='input-3'>0965033384</label> </td>        </tr>        <tr class='height-1-xs'></tr>       </tbody>     </table>     </div>     <div class='quanlynguoibenh'>      <label class='text-transform title'>II. Quản lý người bệnh</label>      <table class='table table-border text-sm'>       <tbody>       <tr>         <td style='width: 50%'> <label>12. Vào viện:</label> <label class='input-sm'> 19</label> <label>giờ</label> <label class='input-sm'>08</label> <label>phút</label> <label class='ml-2 input-sm'>ngày</label> <label>09/12/2021</label> <br> <label>13. Trực tiếp vào:</label> <span class='text-checkbox'>1. Cấp cứu</span> <label class='check-box'></label> <span class='text-checkbox'>2. KKB</span> <label type='checkbox' class='check-box'></label> <span class='text-checkbox'>3. Khoa điều trị</span> <label type='checkbox' class='check-box'>X</label> </td>         <td style='width: 50%'> <label>14. Nơi giới thiệu:</label> <span class='text-checkbox'>1. Cơ quan y tế</span> <label type='checkbox' class='check-box'></label> <span class='text-checkbox'>2. Tự đến</span> <label type='checkbox' class='check-box'>X</label> <span class='text-checkbox'>3. Khác</span> <label type='checkbox' class='check-box'></label> <br> <label> - Vào viện do bệnh này lần thứ</label> <label type='text' class='check-box'>1</label> </td>        </tr>        <tr>         <td>          <table class='table table-none size-10'>           <tbody>           <tr style='height:60px'>             <td style='width:20%'> <br> <label class='size-11'>15. Vào khoa</label> </td>             <td class='div-position'> <br> <label class='input-1 border-a height-1-xl'></label> <label class='top-0' style='left:1cm'>Khoa</label> <label class='text-sm top-0' style='right:2.5cm;'>ng / th / năm</label> <label class='top-0 right-2' style='font-size:8pt'> Số ngày Đtri</label> <label class='input-xs'> 19</label> <label>Giờ</label> <label class='input-xs'> 08</label> phút <label> 09/12/2021 </label>              <div class='right-2' style='top:0.6cm'>               <label class='check-box'></label>               <label class='check-box'></label>              </div> </td>            </tr>           </tbody>         </table>          <table class='table table-none size-11'>           <tbody>           <tr>             <td style='width:20%' rowspan='3'><label>16. Chuyển khoa</label> </td>             <td class='div-position'> <label class='input-1 border-a height-1-sm' style='margin-bottom:2px'></label> <label class='input-xs'></label> <label>Giờ</label> <label class='input-xs'></label> <label>phút</label> <label class=''></label>              <div class='right-2 top-0'>               <label class='check-box'></label>               <label class='check-box'></label>              </div> </td>            </tr>            <tr>             <td class='div-position'> <label class='input-1 border-a height-1-sm' style='margin-bottom:2px'></label> <label class='input-xs'></label> <label>Giờ</label> <label class='input-xs'></label> <label>phút</label> <label class=''></label>              <div class='right-2 top-0'>               <label class='check-box'></label>               <label class='check-box'></label>              </div> </td>            </tr>            <tr>             <td class='div-position'> <label class='input-1 border-a height-1-sm'></label> <label class='input-xs'></label> <label>Giờ</label> <label class='input-xs'></label> <label>phút</label> <label class=''></label>              <div class='right-2 top-0'>               <label class='check-box'></label>               <label class='check-box'></label>              </div> </td>            </tr>           </tbody>         </table> </td>         <td>          <table class='table table-none size-11'>           <tbody>           <tr>             <td style='width:27%'> <label class='size-11' style='vertical-align: middle !important'>17. Chuyển viện:</label> </td>             <td style='width:27%'> <span class=''>1. Tuyến trên</span> <label type='checkbox' class='check-box'></label> </td>             <td style='width:28%'> <span class=''>2. Tuyến dưới</span> <label type='checkbox' class='check-box'></label> </td>             <td style='width:16%'> <span class=''>3. CK</span> <label type='checkbox' class='check-box'></label> </td>            </tr>           </tbody>         </table> <label class='input-4 height-2'> - Chuyển đến: <span></span> </label> <br> <label>18. Ra viện:</label> <label class='input-sm text-center'></label> <label>Giờ</label> <label class='input-sm text-center'></label> <label class='ml-4'>Ngày</label> <label></label> <br> <span class='size-11 ml-4'>1. Ra viện</span> <label class='check-box'></label> <span class='size-11'>2. Xin về</span> <label class='check-box'></label> <span class='size-11'>3. Bỏ về</span> <label class='check-box'></label> <span class='size-11'>4. Đưa về</span> <label class='check-box'></label>          <div class='div-position'>           <label>19. Tổng số ngày điều trị:</label>           <label type='text' class='input-2'> </label>           <div class='right-2x top-0'>            <label class='check-box ml-00 '></label>            <label class='check-box ml-00 bl-0 '></label>            <label class='check-box ml-00 bl-0'></label>           </div>          </div> </td>        </tr>       </tbody>     </table>     </div>     <div class='chandoan'>      <table class='table table-none'>       <tbody>       <tr class='height-1-xss'></tr>        <tr>         <td><label class='text-transform title'>III. Chẩn đoán</label><label style='margin-left:5cm'>Mã</label><label style='margin-left:9.5cm'>Mã</label></td>        </tr>        <tr class='height-1-xss'></tr>       </tbody>     </table>      <table class='table table-border text-sm'>       <tbody>       <tr>         <td style='width: 50%'>          <div class='div-position'>           <label class='input-4 height-2'>20. Nơi chuyển đến: <span name=''></span></label>           <div class='right-2 top-0x'>            <label class='check-box ml-00 '></label>            <label class='check-box ml-00 bl-0'></label>            <label class='check-box ml-00 bl-0'></label>            <label class='check-box ml-00 bl-0 '></label>           </div>          </div>          <div class='div-position'>           <label class='input-4 height-2'>21. KKB, Cấp cứu: <br><span name=''>(Bệnh tả)</span></label>           <div class='right-2 top-0x'>            <label class='check-box ml-00 '>A </label>            <label class='check-box ml-00 bl-0'>0 </label>            <label class='check-box ml-00 bl-0'>0 </label>            <label class='check-box ml-00 bl-0 '></label>           </div>          </div>          <div class='div-position'>           <label class='input-4 height-2'>22. Khi vào khoa điều trị: <br><span name=''>Đang khám</span></label>           <div class='right-2 top-0x'>            <label class='check-box ml-00 '>A </label>            <label class='check-box ml-00 bl-0'>0 </label>            <label class='check-box ml-00 bl-0'>0 </label>            <label class='check-box ml-00 bl-0 '></label>           </div>          </div>          <table class='table table-none'>           <tbody>           <tr>             <td style='width:50%'> <label class='text-sm'>+ Thủ thuật</label> <label class='check-box'></label> </td>             <td style='width:50%'> <label class='text-sm'>+ Phẫu thuật</label> <label class='check-box'></label> </td>            </tr>           </tbody>         </table> </td>         <td style='width: 50%'> <label>23. Ra viện:</label> <br>          <div class='div-position'>           <label class='input-4 height-3'>+ Bệnh chính: <span name=''></span> <span></span> </label>           <div class='right-2 top-0x'>            <label class='check-box ml-00 '></label>            <label class='check-box ml-00 bl-0'></label>            <label class='check-box ml-00 bl-0'></label>            <label class='check-box ml-00 bl-0 '></label>           </div>          </div>          <div class='div-position'>           <label class='input-4 height-2'>+ Bệnh kèm theo: <span name=''></span> <span></span> </label>           <div class='right-2 top-0x'>            <label class='check-box ml-00 '></label>            <label class='check-box ml-00 bl-0'></label>            <label class='check-box ml-00 bl-0'></label>            <label class='check-box ml-00 bl-0 '></label>           </div>          </div>           <table class='table table-none' style='margin-top:5px'>           <tbody>           <tr>             <td style='width:50%'> <label class='text-sm'>+ Tai biến</label> <label class='check-box'></label> </td>             <td style='width:50%'> <label class='text-sm'>+ Biến chứng</label> <label class='check-box'></label> </td>            </tr>           </tbody>         </table> </td>        </tr>       </tbody>     </table>     </div>     <div class='tinhtrangravien'>      <table class='table table-none'>       <tbody>       <tr class='height-1-xss'></tr>        <tr>         <td><label class='text-transform title'>IV. Tình trạng ra viện</label></td>        </tr>        <tr class='height-1-xss'></tr>       </tbody>     </table>      <table class='table table-border size-11'>       <tbody>       <tr>         <td style='width: 40%'> <label>24. Kết quả điều trị</label> <br>          <table class='table table-none'>           <tbody>           <tr style='height:10px'>             <td class='div-position'> <span class='text-checkbox ml-4'>1. Khỏi</span> <label class='check-box right-3'></label> </td>             <td class='div-position'> <span class='text-checkbox ml-4'>4. Nặng hơn</span> <label class='check-box right-3'></label> </td>            </tr>            <tr style='height:10px'>             <td class='div-position'> <span class='text-checkbox ml-4'>2. Đỡ, giảm</span> <label class='check-box right-3'></label> </td>             <td class='div-position'> <span class='text-checkbox ml-4'>5. Tử vong</span> <label class='check-box right-3'></label> </td>            </tr>            <tr style='height:10px'>             <td class='div-position'> <span class='text-checkbox ml-4'>3. Không thay đổi</span> <label class='check-box right-3'></label> </td>             <td></td>            </tr>           </tbody>         </table> <label>25. Giải phẫu bệnh <span style='font-style: italic;'>(khi có sinh tiết):</span></label> <br> <span class='text-checkbox ml-4'>1. Lành tính</span> <label class='check-box'></label> <span class='text-checkbox'>2. Nghi ngờ</span> <label class='check-box'></label> <span class='text-checkbox'>3. Ác tính</span> <label class='check-box'></label> </td>         <td style='width: 60%'>          <table class='table table-none size-10'>           <tbody>           <tr>             <td style='width:3.5cm'><label>26. Tình hình tử vong:</label></td>             <td> <label class='input-sm'></label> <label>giờ</label> <label></label> <label>ph</label> </td>             <td> <label class='ml-4'>ngày</label> <label class='input-sm'></label> <label>tháng</label> <label class='input-sm'></label> <label>năm</label> <label class='input-sm'></label> </td>            </tr>           </tbody>         </table>          <table class='table table-none'>           <tbody>           <tr style='height:22px'>             <td class='div-position'> <span class='text-checkbox'>1. Do bệnh</span> <label class='check-box right-4'></label> </td>             <td class='div-position'> <span class='text-checkbox'>2. Do tai biến điều trị</span> <label class='check-box right-4'></label> </td>             <td class='div-position' style='width:2.5cm'> <span class='text-checkbox'>3. Khác</span> <label class='check-box right-4'></label> </td>            </tr>            <tr style='height:22px'>             <td class='div-position'> <span class='text-checkbox'>1. Trong 24h vào viện</span> <label class='check-box right-4'></label> </td>             <td class='div-position'> <span class='text-checkbox'>2. Sau 24h vào viện</span> <label class='check-box right-4'></label> </td>             <td class='div-position'> </td>            </tr>           </tbody>         </table>          <div class='div-position'>           <label class='input-4 height-2'>27. Nguyên nhân chính tử vong: <label></label></label>           <div class='right-2 top-0'>            <label class='check-box ml-00 '></label>            <label class='check-box ml-00 bl-0'></label>            <label class='check-box ml-00 bl-0'></label>            <label class='check-box ml-00 bl-0 '></label>           </div>          </div>          <div class='div-position'>           <label>28. Khám nghiệm tử thi:</label>           <label class='check-box'></label>           <label>29. Chẩn đoán giải phẫu tử thi:</label>           <br>           <label type='text' class='input-6'> </label>           <div class='right-2 top-0'>            <label class='check-box ml-00 '></label>            <label class='check-box ml-00 bl-0'></label>            <label class='check-box ml-00 bl-0'></label>            <label class='check-box ml-00 bl-0 '></label>           </div>          </div> </td>        </tr>       </tbody>     </table>     </div>     <div class='kyten'>      <table class='table table-none text-center'>       <tbody>       <tr>         <td style='width: 40%'></td>         <td style='width: 20%'></td>         <td> Ngày <label class='input-sm'></label> tháng <label class='input-sm'></label> năm <label class='input-sm'></label> </td>        </tr>        <tr>         <td>          <div class='kyso'>           <label class='bold'>Giám đốc bệnh viện</label>          </div> </td>         <td></td>         <td>          <div class='kyso'>           <label class='bold'>Trưởng khoa</label>          </div> </td>        </tr>       <tr class='height-3'></tr>        <tr>         <td>Họ và tên:........................................</td>         <td></td>         <td>Họ và tên:........................................</td>        </tr>        </tbody>     </table>     </div>     <label class='page-number'>1</label>    </div>    <div class='break-page'></div>    <div class='page size-12'>     <label class='text-transform size-13 bold'>A- Bệnh án</label>     <br>     <table class='table table-none'>      <tbody>      <tr>        <td style='width:70%'> <label class='size-13 bold'>I. Lý do vào viện:</label> <label class='input-6 size-12'></label> </td>        <td> <label>Vào ngày thứ <label></label> của bệnh</label> </td>       </tr>      </tbody>    </table>     <label class='size-13 bold'>II. Hỏi bệnh:</label>     <br>     <label class='size-12'>1. Quá trình bệnh lý: <span class='italic' style='font-weight:100'>(khởi phát, diễn biến, chẩn đoán, điều trị của tuyến dưới v.v...).</span></label>     <label class='height-6 w-100'></label>     <label class='size-12'>2. Tiền sử bệnh:</label>     <label>+ Bản thân: <span style='font-style: italic;'>(Những bệnh đã mắc, dị ứng, thói quen ăn uống, sinh hoạt, thuốc là, rượu bia, ma túy, khác ...)</span></label>     <label class='height-3 w-100'></label>     <label class='italic'>Đặc điểm liên quan bệnh</label>     <table class='table table-border'>      <tbody>      <tr style='height:22px'>        <td class='text-center' style='width:5%'>TT</td>        <td class='italic div-position' style='width:20%'><label class='right-2'>Ký hiệu</label></td>        <td class='text-center' style='width:25%'>Thời gian (tính theo tháng)</td>        <td class='text-center' style='width:5%'>TT</td>        <td class='italic div-position' style='width:20%'><label class='right-2'>Ký hiệu</label></td>        <td class='text-center' style='width:25%'>Thời gian (tính theo tháng)</td>       </tr>       <tr style='height:22px'>        <td class='text-center'>01</td>        <td class='div-position'>- Dị ứng <label class='check-box right-4'></label></td>        <td class='text-center'></td>        <td class='text-center'>04</td>        <td class='div-position'>- Thuốc lá <label class='check-box right-4'></label></td>        <td class='text-center'></td>       </tr>       <tr style='height:22px'>        <td class='text-center'>02</td>        <td class='div-position'>- Ma túy <label class='check-box right-4'></label></td>        <td class='text-center'></td>        <td class='text-center'>05</td>        <td class='div-position'>- Thuốc lào <label class='check-box right-4'></label></td>        <td class='text-center'></td>       </tr>       <tr style='height:22px'>        <td class='text-center'>03</td>        <td class='div-position'>- Rượu bia <label class='check-box right-4'></label></td>        <td class='text-center'></td>        <td class='text-center'>06</td>        <td class='div-position'>- Khác <label class='check-box right-4'></label></td>        <td class='text-center'></td>       </tr>      </tbody>    </table>     <label>+ Gia đình: <span style='font-style: italic;'>(Những người trong gia đình: bệnh đã mắc, đời sống, tinh thần, vật chất v.v...).</span></label>     <label class='height-2 w-100'></label>     <label class='size-13 bold'>III. Khám bệnh:</label>     <label class='size-12'>1. <b>Toàn thân:</b> <span class='italic' style=' font-weight:100'>(Ý thức, da niêm mạc, hệ thống hạch, tuyến giáp, vị trí, kích thước, số lượng, di động v.v...)</span></label>     <table class='table'>      <tbody>      <tr>        <td style='width: 75%'> <label class='height-4'></label> </td>        <td style='width: 25%; vertical-align:top !important'>         <table class='table size-12' style='border: 1.5px solid;font-style: italic;'>          <tbody>          <tr>            <td><label>Mạch</label></td>            <td><label type='text' class='input-sm'></label></td>            <td><label>lần/ph</label></td>           </tr>           <tr>            <td><label>Nhiệt độ</label></td>            <td><label type='text' class='input-sm'></label></td>            <td><label>℃</label></td>           </tr>           <tr>            <td><label>Huyết áp</label></td>            <td><label type='text' class='input-sm'>/</label></td>            <td><label>mmHg</label></td>           </tr>           <tr>            <td><label>Nhịp thở</label></td>            <td><label type='text' class='input-sm'></label></td>            <td><label>lần/ph</label></td>           </tr>           <tr>            <td><label>Cân nặng</label></td>            <td><label type='text' class='input-sm'></label></td>            <td><label>kg</label></td>           </tr>          </tbody>        </table> </td>       </tr>      </tbody>    </table>     <label class='size-12'>2. Các cơ quan:</label>     <div class='height-5'>      <label>+ Tuần hoàn:</label>     <br>      <span> </span>     </div>     <div class='height-4'>      <label>+ Hô hấp:</label>     <br>      <span> </span>     </div>     <div class='height-3'>      <label>+ Tiêu hóa:</label>     <br>      <span> </span>     </div>     <label class='page-number'>2</label>    </div>    <div class='break-page'></div>    <div class='page size-12'>     <div class='height-3'>      <label>+ Thận - Tiết niệu - Sinh dục:</label>     <br>      <span> </span>     </div>     <div class='height-3'>      <label>+ Thần kinh:</label>     <br>      <span> </span>     </div>     <div class='height-3'>      <label>+ Cơ - Xương - Khớp:</label>     <br>      <span> </span>     </div>     <div class='height-3'>      <label>+ Tai-Mũi-Họng:</label>     <br>      <span> </span>     </div>     <div class='height-3'>      <label>+ Răng-Hàm-Mặt:</label>     <br>      <span> </span>     </div>     <div class='height-3'>      <label>+ Mắt:</label>     <br>      <span> </span>     </div>     <div class='height-3'>      <label>+ Nội tiết, dinh dưỡng và các bệnh lý khác:</label>     <br>      <span> </span>    </div>     <div class='height-3'>      <label class='title'>3. Cách xét nghiệm cận lâm sàng cần làm:</label>     <br>      <span name=''></span>     </div>     <div class='height-5'>      <label class='title'>4. Tóm tắt bệnh án:</label>     <br>      <span name=''></span>     </div>     <label class='title'>IV. Chẩn đoán khi vào khoa điều trị:</label>     <table class='table'>      <tbody>      <tr>        <td style='width: 25%'><label>+ Bệnh chính:</label></td>        <td style='width: 75%'><label></label></td>       </tr>       <tr>        <td style='width: 25%'><label>+ bệnh kèm theo (Nếu có):</label></td>        <td style='width: 75%'><label></label></td>       </tr>       <tr>        <td style='width: 25%'><label>+ Phân biệt:</label></td>        <td style='width: 75%'><label></label></td>       </tr>      </tbody>    </table>     <div class='height-2'>      <label class='size-13 bold'>V. Tiên lượng:</label>     <br>      <span></span>     </div>     <div class='height-2'>      <label class='size-13 bold'>VI. Hướng điều trị:</label>     <br>      <span></span>     </div>     <table class='table table-none' style='text-align: center;'>      <tbody>      <tr>        <td></td>        <td class='italic' style='width: 40%;'> Ngày <label class='input-sm'> 09</label> tháng <label class='input-sm'> 12</label> năm <label class='input-sm'> 2021</label> </td>       </tr>       <tr>        <td></td>        <td style='vertical-align: top !important;'>         <div class='kyso'>          <label class='title'>Bác sỹ làm bệnh án</label>          <label> </label>         </div> </td>       </tr>       <tr class='height-5'></tr>       <tr>        <td></td>        <td>Họ và tên:........................................</td>       </tr>      </tbody>    </table>     <label class='page-number'>3</label>    </div>    <div class='break-page'></div>    <div class='page size-12'>     <label class='text-transform title'>B. Tổng kết bệnh án</label>     <div>      <div>       <label class='title'>1. Quá trình bệnh lý và diễn biến lâm sàng:</label>      <br>       <span></span>      </div>      <div class='height-1'></div>      <div>       <label class='title'>2. Tóm tắt kết quả xét nghiệm:</label>      <br>       <span></span>      </div>      <div class='height-1'></div>      <div>       <label class='title'>3. Phương pháp điều trị:</label>      <br>       <span></span>      </div>      <div class='height-1'></div>      <div>       <label class='title'>4. Tình trạng người ra viện:</label>      <br>       <span></span>      </div>      <div class='height-1'></div>      <div>       <label class='title'>5. Hướng điều trị và các chế độ tiếp theo:</label>      <br>       <span></span>      </div>      <div class='height-1'></div>     </div>     <table class='table text-center table-border'>      <tbody>      <tr>        <td colspan='2' class='title'>Hồ sơ, phim, ảnh</td>        <td rowspan='4' style='width:25%'>         <div class='kyso'>          <label class='title'>Người giao hồ sơ:</label>          <label> </label>          <br>         <br>         <br>         <br>         <br> Họ và tên:.....................         </div> </td>        <td rowspan='8' style='width:30%'> Ngày <label class='input-xs'></label> tháng <label class='input-xs'></label> năm <label class='input-xs'></label> <br>         <div class='kyso'>          <label class='title'>Bác sỹ điều trị</label>         </div> <br><br><br><br><br><br><br><br> Họ và tên:..................... </td>       </tr>       <tr>        <td class='title' style='width:30%'>Loại</td>        <td class='title' style='width:15%'>Số tờ</td>       </tr>       <tr>        <td class='text-left'>- X - quang</td>        <td></td>       </tr>       <tr>        <td class='text-left'>- CT Scanner</td>        <td></td>       </tr>       <tr>        <td class='text-left'>- Siêu âm</td>        <td></td>        <td rowspan='4'>         <div class='kyso'>          <label class='title' style='vertical-align:top'>Người nhận hồ sơ:</label>          <label> </label>          <br>         <br>         <br>         <br>         <br> Họ và tên:.....................         </div> </td>       </tr>       <tr>        <td class='text-left'>- Xét nghiệm</td>        <td></td>       </tr>       <tr>        <td class='text-left'>- Khác</td>        <td></td>       </tr>       <tr>        <td class='text-left'>- Toàn bộ hồ sơ</td>        <td></td>       </tr>      </tbody>    </table>     <label class='page-number'>4</label>    </div>   </div>    <script>// var nguoiKy = '';
+// if(document.getElementById('sign').length >0){
+//     nguoiKy = document.getElementById('sign').value;
+// }
+if(document.getElementById('sign-0')){
+    var nguoiKy = document.getElementById('sign-0').value;
+    var list = nguoiKy.split(',');
+    var signInfo = {};
+    for(let i = 0;i<list.length;i++){
+        const couple = list[i].split('=');
+        signInfo[couple[0]]=couple[1];
+    }
+    var signInfoTxt = signInfo.CN;
+    document.getElementById('nguoi-ky-0').innerHTML = 'Người ký: ' + signInfoTxt;
+} 
+if(document.getElementById('sign-1')){
+    var nguoiKy = document.getElementById('sign-1').value;
+    var list = nguoiKy.split(',');
+    var signInfo = {};
+    for(let i = 0;i<list.length;i++){
+        const couple = list[i].split('=');
+        signInfo[couple[0]]=couple[1];
+    }
+    var signInfoTxt = signInfo.CN;
+    document.getElementById('nguoi-ky-1').innerHTML = 'Người ký: ' + signInfoTxt;
+} 
+if(document.getElementById('sign-2')){
+    var nguoiKy = document.getElementById('sign-2').value;
+    var list = nguoiKy.split(',');
+    var signInfo = {};
+    for(let i = 0;i<list.length;i++){
+        const couple = list[i].split('=');
+        signInfo[couple[0]]=couple[1];
+    }
+    var signInfoTxt = signInfo.CN;
+    document.getElementById('nguoi-ky-2').innerHTML = 'Người ký: ' + signInfoTxt;
+} 
+if(document.getElementById('sign-4')){
+    var nguoiKy = document.getElementById('sign-4').value;
+    var list = nguoiKy.split(',');
+    var signInfo = {};
+    for(let i = 0;i<list.length;i++){
+        const couple = list[i].split('=');
+        signInfo[couple[0]]=couple[1];
+    }
+    var signInfoTxt = signInfo.CN;
+    document.getElementById('nguoi-ky-4').innerHTML = 'Người ký: ' + signInfoTxt;
+} 
+if(document.getElementById('sign-5')){
+    var nguoiKy = document.getElementById('sign-5').value;
+    var list = nguoiKy.split(',');
+    var signInfo = {};
+    for(let i = 0;i<list.length;i++){
+        const couple = list[i].split('=');
+        signInfo[couple[0]]=couple[1];
+    }
+    var signInfoTxt = signInfo.CN;
+    document.getElementById('nguoi-ky-5').innerHTML = 'Người ký: ' + signInfoTxt;
+} 
+if(document.getElementById('sign-3')){
+    var nguoiKy = document.getElementById('sign-3').value;
+    var list = nguoiKy.split(',');
+    var signInfo = {};
+    for(let i = 0;i<list.length;i++){
+        const couple = list[i].split('=');
+        signInfo[couple[0]]=couple[1];
+    }
+    var signInfoTxt = signInfo.CN;
+    document.getElementById('nguoi-ky-3').innerHTML = 'Người ký: ' + signInfoTxt;
+} 
+if(document.getElementById('sign-6')){
+    var nguoiKy = document.getElementById('sign-3').value;
+    var list = nguoiKy.split(',');
+    var signInfo = {};
+    for(let i = 0;i<list.length;i++){
+        const couple = list[i].split('=');
+        signInfo[couple[0]]=couple[1];
+    }
+    var signInfoTxt = signInfo.CN;
+    document.getElementById('nguoi-ky-6').innerHTML = 'Người ký: ' + signInfoTxt;
+} 
+function removeComma() {
+    //áp dụng cho thẻ span - label
+    var els = document.getElementsByClassName('RCA');     
+    Array.from(els).forEach((el) => { el.textContent= el.textContent.replace(/,/g,'');});
+}
+removeComma();
+var path = window.location.pathname;
+var page = path.split('/').pop();
+document.getElementById('exportWord').href = 'https://onehealth.vncare.vn/api/dreport/report/download/word?filename=' + page;
+document.getElementById('exportExcel').href = 'https://onehealth.vncare.vn/api/dreport/report/download/excel?filename=' + page;
+
+var jQueryScript = document.createElement('script');
+jQueryScript.type = 'text/javascript'
+jQueryScript.setAttribute('src', 'https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js');
+document.head.appendChild(jQueryScript);
+
+//lib for export
+var jQueryScript3 = document.createElement('script');
+jQueryScript3.type = 'text/javascript'
+jQueryScript3.setAttribute('src', 'https://kendo.cdn.telerik.com/2021.2.511/js/jszip.min.js');
+document.head.appendChild(jQueryScript3);
+
+
+var jQueryScript3 = document.createElement('script');
+jQueryScript3.type = 'text/javascript'
+jQueryScript3.setAttribute('src', 'https://kendo.cdn.telerik.com/2021.2.511/js/kendo.all.min.js');
+document.head.appendChild(jQueryScript3);
+
+
+var jQueryScript3 = document.createElement('script');
+jQueryScript3.type = 'text/javascript'
+jQueryScript3.setAttribute('src', 'https://kendo.cdn.telerik.com/2017.3.913/js/pako_deflate.min.js');
+document.head.appendChild(jQueryScript3);
+//end lib
+
+setTimeout(function () {
+
+    $(document).ready(function () {
+
+        kendo.pdf.defineFont({
+            'DejaVu Sans': 'https://kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans.ttf',
+            'DejaVu Sans|Bold': 'https://kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans-Bold.ttf',
+            'DejaVu Sans|Bold|Italic': 'https://kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf',
+            'DejaVu Sans|Italic': 'https://kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf',
+            'WebComponentsIcons': 'https://kendo.cdn.telerik.com/2017.1.223/styles/fonts/glyphs/WebComponentsIcons.ttf'
+        });
+
+        $('#exportPdf').click(function () {
+            document.getElementById('TPL_PAGE').style.fontFamily = 'DejaVu Sans, Times, san-serif';
+            document.getElementById('menu').style.display = 'none';
+            kendo.drawing.drawDOM($('#TPL_PAGE'))
+                .then(function (group) {
+                    // Render the result as a PDF file
+                    return kendo.drawing.exportPDF(group, {
+                        paperSize: 'auto',
+                        margin: { left: '1cm', top: '1cm', right: '1cm', bottom: '1cm' }
+                    });
+                })
+                .done(function (data) {
+                    // Save the PDF file
+                    kendo.saveAs({
+                        dataURI: data,
+                        fileName: 'HR-Dashboard.pdf',
+                        proxyURL: 'https://demos.telerik.com/kendo-ui/service/export'
+                    });
+                });
+            document.getElementById('menu').style.display = 'block';
+            document.getElementById('TPL_PAGE').style.fontFamily = 'DejaVu Sans, Times, serif';
+
+        });
+
+         $('#exportWordClient').click(function () {
+            alert('ok');
+        });
+    });
+
+}, 1000);
+
+
+
+
+
+</script> </body></html>
