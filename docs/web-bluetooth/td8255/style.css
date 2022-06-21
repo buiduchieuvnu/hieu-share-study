@@ -1,0 +1,65 @@
+.container{
+    text-align:center;
+    position: absolute;
+    width:1000px;
+    margin: 50px auto;
+    top: 300px;
+    right: 0;
+  }
+  #myCanvas {
+      display: block;
+      border: 1px solid #8C8C8C;
+      margin: 50px auto;
+      background-color: black;
+    padding-right:100px;
+  }
+  .spo2-title{
+    position: absolute;
+    bottom: 250px;
+    color: #FFF;
+    right: 167px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  .spo2{
+    position: absolute;
+    bottom: 195px;
+    color: #FFF;
+    right: 167px;
+    font-size: 50px;
+    font-weight: bold;
+  }
+  .nhipTim-title{
+    position: absolute;
+    bottom: 170px;
+    color: green;
+    right: 176px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  .nhipTim{
+    position: absolute;
+    bottom: 115px;
+    color: green;
+    right: 165px;
+    font-size: 50px;
+    font-weight: bold;
+  }
+  .fa-heart{
+    position: absolute;
+    top: 70px;
+    left: 480px;
+    color: red;
+    font-size: 30px;
+    opacity: 0.5;
+  }
+
+  .blink_me {
+    animation: blinker 1.5s linear infinite;
+  }
+  
+  @keyframes blinker {
+    50% {
+      opacity: 0;
+    }
+  }

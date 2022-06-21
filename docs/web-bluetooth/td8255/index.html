@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>TD8255</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="app.js"></script>
+    <script>
+        var App = new App();
+    </script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h1>FACare TD8255</h1>
+    <fieldset>
+        <legend>Status</legend>
+        Connected: <b style="color: red">No</b> |
+        Notify: <b style="color: red">No</b>
+    </fieldset>
+    <fieldset class="ACTIONS">
+        <legend>1. Kết nối</legend>
+        <button id="btnConnect" onclick="App.connect()">Connect</button> / <button id="btnDisconnect" onclick="App.disConnect()">Disconnect</button> ||
+        Base UUID <input type="text" id="BASE_UUID" value="1212-efde-1523-785feabcd123" size="30" />
+        Service UUID <input type="text" id="SERVICE_UUID" value="00001523" />
+        Characteristic UUID <input type="text" id="CHAR_UUID" value="00001524" />
+        Device name <input type="text" id="DEVICE_NAME" value="TAIDOC TD8255" />
+    </fieldset>
+
+    <fieldset class="ACTIONS">
+        <legend>2. Notify</legend>
+        <button id="btnStartNotify" onclick="App.startNotify()">Start notify</button> / <button id="btnStopNotify" onclick="App.stopNotify()">Stop notify</button>
+    </fieldset>
+
+    <fieldset class="ACTIONS">
+        <legend>3. Write value (Ghi dữ liệu vào thiết bị)</legend>
+        <button id="btnWrite" onclick="App.writeValue()">Write value</button> |
+        Binary Array (Hexadecimal)
+        <input type="text" id="byte1" value="51" size="1" />
+        <input type="text" id="byte2" value="0x47" size="1" />
+        <input type="text" id="byte3" value="2" size="1" />
+        <input type="text" id="byte4" value="0" size="1" />
+        <input type="text" id="byte5" value="0" size="1" />
+        <input type="text" id="byte6" value="0" size="1" />
+        <input type="text" id="byte7" value="A3" size="1" />
+        <input type="text" id="byte8" value="3D" size="1" />
+    </fieldset>
+
+    <fieldset>
+        <legend>Logs</legend>
+        <button onclick="App.clearLog()" style="margin-bottom: 10px;">Clear log</button>
+        <textarea id="txtLog" cols="300" rows="30"
+            style="width:100%; background-color: #3b3b3b; color: #FFF;"></textarea>
+    </fieldset>
+    <div class="container">
+        <canvas id="myCanvas" width="600" height="300">
+        </canvas>
+        <div>
+            <label class="spo2-title">%SpO2</label>
+            <label id="spo2" class="spo2">-</label>
+            <label class="nhipTim-title">bpm</label>
+            <label id="nhipTim" class="nhipTim">-</label>
+            <i id="fa-heart" class="fa fa-heart"></i>
+        </div>
+    </div>
+</body>
+
+</html>

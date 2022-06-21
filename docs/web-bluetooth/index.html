@@ -7,13 +7,10 @@
     <link rel="stylesheet" href="style.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="app.js"></script>
-    <script>
-        if('serviceWorker' in navigator) {
-          navigator.serviceWorker.register('service-worker.js');
-        }
-      </script>
+    <script src="facare.js"></script>
     <script>
         var App = new App();
+        var FACare = new FACare();
     </script>
 </head>
 <body>
@@ -29,7 +26,11 @@
     </fieldset>
     <fieldset class="ACTIONS">
         <legend>Thiết bị FACare</legend>
-        <button id="btnTD8255">TAIDOC TD8255 (SPO2)</button>   
+        <!-- <button id="btnTD8255">TAIDOC TD8255 (SPO2)</button>    -->
+        <button id="btnConnectTD8255-SPO2">Connect TD8255  SPO2</button>   
+        <button id="btnReadTD8255-SPO2">Read TD8255  SPO2</button>   
+        <button id="btnWriteTD8255-SPO2">Write TD8255  SPO2</button>   
+        <button id="btnDescriptorTD8255-SPO2">Get Descriptor TD8255  SPO2</button> 
     </fieldset>
     <fieldset class="FORM">
         <legend>Logs</legend>
