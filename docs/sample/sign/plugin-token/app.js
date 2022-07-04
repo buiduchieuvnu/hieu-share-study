@@ -3,6 +3,8 @@ var App = function () {
 	var that = this;
 	this.AppName = 'Sign | Sample ký điện tử token sử dụng plugin';
     this.LogContent = '';
+    // Get the modal
+    
 
     this.initPage = function(){
 		$('#hAppName').html(that.AppName);
@@ -49,6 +51,17 @@ var App = function () {
         if (window.focus) newWindow.focus();
     }
 
+    this.openModal = function(url){
+        document.getElementById('ifPopup').src = url;
+    }
+
+    this.closeModal = function(url){
+        var _modal = document.getElementById("myModal");
+        document.getElementById('ifPopup').src = null;
+        _modal.style.display = "none";
+    }
+
+
     this.kyToken = function(){
         var baseUrl = $('#baseUrl').val();
         var rptCode = $('#rptCode').val();
@@ -85,13 +98,15 @@ var App = function () {
         var _url = baseUrl + '?type=' + type + '&urlFile=' + urlFile + '&token=' + token + '&rptCode=' + rptCode;
         var _title = 'Ký số token Plugin';
         that.log('_url: ' + _url);
-        that.openPopup(_url,_title,w,h);
+        //that.openPopup(_url,_title,w,h);
+        that.openModal(_url);
     }
 
-	// Methods
 
-    // Events
+
+	// Methods
     $(document).ready(function () {
+        
 
 		that.initPage();
 
@@ -117,6 +132,29 @@ var App = function () {
             }
 		});
 
+        var modal = document.getElementById("myModal");
+        // Get the button that opens the modal
+        var btn = document.getElementById("myBtn");
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+        // Events
+        // When the user clicks the button, open the modal 
+        btn.onclick = function () {
+            that.kyToken();
+            modal.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function () {
+            that.closeModal();
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                that.closeModal();
+            }
+        } 
 
 	});
 
