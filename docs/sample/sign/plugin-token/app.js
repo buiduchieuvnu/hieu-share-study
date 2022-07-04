@@ -12,6 +12,15 @@ var App = function () {
         that.log('Startup!');
 	}
 
+    this.result = function(){
+        console.log('bắt đầu nhận message');
+        window.onmessage = (event) => {
+            if (event.data.message) {
+              that.log(event.data.message.token)
+            }
+          };
+    }
+
     this.log = function (msg) {
         var datetime = '';
         var date = new Date();
@@ -70,6 +79,7 @@ var App = function () {
         var token = $('#token').val();
         var w = $('#width').val();
         var h = $('#height').val();
+        var custom = $('#custom').val();
 
         if(!baseUrl){
             alert('Cảnh báo: bắt buộc nhập baseUrl!');
@@ -95,7 +105,7 @@ var App = function () {
         that.log('urlFile: ' + urlFile);
         that.log('type: ' + type);
         that.log('token: ' + token);
-        var _url = baseUrl + '?type=' + type + '&urlFile=' + urlFile + '&token=' + token + '&rptCode=' + rptCode;
+        var _url = baseUrl + '?type=' + type + '&urlFile=' + urlFile + '&token=' + token + '&rptCode=' + rptCode + '&custom=' + custom;
         var _title = 'Ký số token Plugin';
         that.log('_url: ' + _url);
         //that.openPopup(_url,_title,w,h);
@@ -109,6 +119,7 @@ var App = function () {
         
 
 		that.initPage();
+        that.result();
 
         $('.ACTIONS').on('click','#btnClearLog',function(){
 			that.clearLog();
