@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Sign | Sample ký token sử dụng plugin</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="app.js"></script>
+    <script src="facare.js"></script>
+    <script>
+        var App = new App();
+    </script>
+</head>
+<body>
+    <h1 id="hAppName"></h1>
+    <fieldset class="ACTIONS">
+        <legend>Tham số</legend>
+    </fieldset>
+    <fieldset class="ACTIONS">
+        <legend>Tác vụ</legend>
+        <button id="btnClearLog">Clear</button>
+        <button id="btnCheck">Kiểm tra bluetooth trên thiết bị</button>
+    </fieldset>
+    
+    <fieldset class="FORM">
+        <legend>Logs</legend>
+        <textarea id="txtLog" cols="300" rows="30" style="width:100%; background-color: #3b3b3b; color: #FFF;"></textarea>
+    </fieldset>
+</body>
+
+</html>
