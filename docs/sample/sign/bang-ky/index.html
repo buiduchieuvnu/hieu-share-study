@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Sign | Sample ký token sử dụng plugin</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="app.js"></script>
+    <script>
+        var App = new App();
+    </script>
+</head>
+
+<body>
+    <h1>Sample | Màn hình phía ứng dụng tích hợp</h1>
+    <hr />
+    <fieldset class="FORM">
+        <legend>Tham số</legend>
+        <p>baseUrl (*): <input id="baseUrl" type="text" size="150"
+                value="https://test-onehealth.vncare.vn/app/onehealth/kyso/bangkyso" /></p>
+        <p>rptCode: <input id="rptCode" type="text" size="50" value="BM_PHIEU_KCB_YEUCAU_110_79023" /></p>
+        <p>urlFile (*): <input id="urlFile" type="text" size="150"
+                value="https://storage-emr.vnpt.vn/onehealth.public/common/xml/110.xml" /></p>
+        <p>Họ tên (*): <input id="hoTen" type="text" size="150" value="" /></p>
+        <p>Mã định dạng (*): <input id="ma" type="text" size="150" value="" /></p>
+        <p>Định dạng (*):
+            <select id="type">
+                <option value="xml">XML</option>
+                <option value="pdf">PDF</option>
+            </select>
+            Hiệu chỉnh trước khi ký (dành cho PDF) (*):
+            <select id="custom" disabled>
+                <option value="1">Có</option>
+                <option value="0" selected="true">Không</option>
+            </select>
+        </p>
+        </p>
+
+
+        <p>token (*):
+            <textarea id="token" cols="150" rows="5"></textarea>
+        </p>
+    </fieldset>
+    <fieldset class="ACTIONS">
+        <legend>Tác vụ</legend>
+        <button id="btnKyToken">Ký số token</button>
+        <button id="btnClearLog">Clear</button>
+    </fieldset>
+
+    <fieldset class="LOG">
+        <legend>Logs</legend>
+        <textarea id="txtLog" cols="300" rows="30"
+            style="width:100%; background-color: #3b3b3b; color: #FFF;"></textarea>
+    </fieldset>
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Ký số Token sử dụng Plugin</p>
+            <iframe id="ifPopup" src="" width="100%" style="min-height: 500px; height:90%"></iframe>
+        </div>
+
+    </div>
+    <script>
+
+
+    </script>
+</body>
+
+</html>

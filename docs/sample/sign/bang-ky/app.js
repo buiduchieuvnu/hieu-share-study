@@ -76,6 +76,8 @@ var App = function () {
         var rptCode = $('#rptCode').val();
         var type = $('#type').val();
         var urlFile = $('#urlFile').val();
+        var hoTen = $('#hoTen').val();
+        var ma = $('#ma').val();
         var token = $('#token').val();
         var w = $('#width').val();
         var h = $('#height').val();
@@ -99,13 +101,19 @@ var App = function () {
             return false;
         }
 
+        if(!hoTen){
+            alert('Cảnh báo: bắt buộc nhập họ tên!');
+            $('#hoTen').focus();
+            return false;
+        }
+
         that.log('Bắt đầu ký token...');
         that.log('baseUrl: ' + baseUrl);
         that.log('rptCode: ' + rptCode);
         that.log('urlFile: ' + urlFile);
         that.log('type: ' + type);
         that.log('token: ' + token);
-        var _url = baseUrl + '?type=' + type + '&urlFile=' + urlFile + '&token=' + token + '&rptCode=' + rptCode + '&custom=' + custom;
+        var _url = baseUrl + '?type=' + type + '&urlFile=' + urlFile + '&token=' + token + '&rptCode=' + rptCode + '&custom=' + custom + '&hoTen=' + hoTen + '&ma=' + ma;
         var _title = 'Ký số token Plugin';
         that.log('_url: ' + _url);
         //that.openPopup(_url,_title,w,h);
