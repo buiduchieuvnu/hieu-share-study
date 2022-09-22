@@ -3,6 +3,7 @@ var App = function () {
 	var that = this;
 	this.AppName = 'Sign | Sample ký điện tử token sử dụng plugin';
     this.LogContent = '';
+    const GG = new GoogleCloudService();
     // Get the modal
     
 
@@ -106,6 +107,9 @@ var App = function () {
             $('#hoTen').focus();
             return false;
         }
+
+        const sp = 'Xin mời bệnh nhân ' + hoTen + ', mã số ' + ma + ' thực hiện ký điện tử trên bảng ký.';
+        GG.speech(sp, 1);
 
         that.log('Bắt đầu ký token...');
         that.log('baseUrl: ' + baseUrl);
