@@ -3,6 +3,26 @@ var App = function () {
 	var that = this;
 	this.AppName = 'Sign | Sample ký điện tử token sử dụng plugin';
     this.LogContent = '';
+    var data = {
+        token:"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJFSEVBTFRIIiwianRpIjoiMiIsInR5cGUiOiJBQ0NFU1NfVE9LRU4iLCJET05WSV9JRCI6MjgxLCJNQV9ET05WSSI6Ijk5OTk5IiwiVkFJX1RSTyI6IkFETUlOX09ORUhFQUxUSCxBRE1JTl9ET05WSSIsIkRPTlZJX1BIQVBOSEFOX0lEIjoyODEsIkRJQ0hfVlUiOiIiLCJpc3MiOiJodHRwOi8vT05IRUFMVEguVk5DQVJFLlZOIiwiaWF0IjoxNjY5ODY0MzU2LCJleHAiOjE2Njk4OTMxNTZ9.4d5JUAFEnQVSQNMFR8H5JSitQSF-LYjboTO601t5sCLohIPJbvemP1ruz5kkTOxyrXaAm8kea3-Us3C21LnOQQ",
+          type:"xml",
+          hoTen:"Nguyễn Văn Nam",
+          ma:"BN032659958",
+          files:[
+            {
+              url:"https://storage-emr.vnpt.vn/onehealth.public/common/xml/110.xml",
+              rptCode:"BM_PHIEU_KCB_YEUCAU_110_79023",
+              name:"Báo cáo 1",
+              code:"code0001"
+            },
+            {
+              url:"https://storage-emr.vnpt.vn/onehealth.public/common/xml/XETNGHIEM_17.xml",
+              rptCode:"BM_PHIEU_KETQUA_XETNGHIEM_17",
+              name:"Báo cáo 2",
+              code:"code0002"
+            }
+          ]
+        };
     const GG = new GoogleCloudService();
     // Get the modal
     
@@ -17,7 +37,23 @@ var App = function () {
         console.log('bắt đầu nhận message');
         window.onmessage = (event) => {
             if (event.data.message) {
-              that.log(event.data.message.SignedData)
+              if(event.data.func == 'select'){
+                that.log(event.data.message.SignedData)
+              }
+              if(event.data.message.start){
+                var a = document.getElementById('ifPopup').contentWindow;
+                var mess = {
+                    SignedData: data
+                  };
+                  a.postMessage(
+                        {
+                          func: 'postData',
+                          message: mess
+                        },
+                        '*'
+                      );
+                console.log('11111');
+              }
             }
           };
     }
@@ -74,54 +110,54 @@ var App = function () {
 
     this.kyToken = function(){
         var baseUrl = $('#baseUrl').val();
-        var rptCode = $('#rptCode').val();
-        var type = $('#type').val();
-        var urlFile = $('#urlFile').val();
-        var hoTen = $('#hoTen').val();
-        var ma = $('#ma').val();
-        var token = $('#token').val();
-        var w = $('#width').val();
-        var h = $('#height').val();
-        var custom = $('#custom').val();
+        // var rptCode = $('#rptCode').val();
+        // var type = $('#type').val();
+        // var urlFile = $('#urlFile').val();
+        // var hoTen = $('#hoTen').val();
+        // var ma = $('#ma').val();
+        // var token = $('#token').val();
+        // var w = $('#width').val();
+        // var h = $('#height').val();
+        // var custom = $('#custom').val();
 
-        if(!baseUrl){
-            alert('Cảnh báo: bắt buộc nhập baseUrl!');
-            $('#baseUrl').focus();
-            return false;
-        }
+        // if(!baseUrl){
+        //     alert('Cảnh báo: bắt buộc nhập baseUrl!');
+        //     $('#baseUrl').focus();
+        //     return false;
+        // }
 
-        if(!urlFile){
-            alert('Cảnh báo: bắt buộc nhập urlFile!');
-            $('#urlFile').focus();
-            return false;
-        }
+        // if(!urlFile){
+        //     alert('Cảnh báo: bắt buộc nhập urlFile!');
+        //     $('#urlFile').focus();
+        //     return false;
+        // }
 
-        if(!token){
-            alert('Cảnh báo: bắt buộc nhập token!');
-            $('#token').focus();
-            return false;
-        }
+        // if(!token){
+        //     alert('Cảnh báo: bắt buộc nhập token!');
+        //     $('#token').focus();
+        //     return false;
+        // }
 
-        if(!hoTen){
-            alert('Cảnh báo: bắt buộc nhập họ tên!');
-            $('#hoTen').focus();
-            return false;
-        }
+        // if(!hoTen){
+        //     alert('Cảnh báo: bắt buộc nhập họ tên!');
+        //     $('#hoTen').focus();
+        //     return false;
+        // }
 
-        const sp = 'Xin mời bệnh nhân ' + hoTen + ', mã số ' + ma + ' thực hiện ký điện tử trên bảng ký.';
-        GG.speech(sp, 1);
+        // const sp = 'Xin mời bệnh nhân ' + hoTen + ', mã số ' + ma + ' thực hiện ký điện tử trên bảng ký.';
+        // GG.speech(sp, 1);
 
-        that.log('Bắt đầu ký token...');
-        that.log('baseUrl: ' + baseUrl);
-        that.log('rptCode: ' + rptCode);
-        that.log('urlFile: ' + urlFile);
-        that.log('type: ' + type);
-        that.log('token: ' + token);
-        var _url = baseUrl + '?type=' + type + '&urlFile=' + urlFile + '&token=' + token + '&rptCode=' + rptCode + '&custom=' + custom + '&hoTen=' + hoTen + '&ma=' + ma;
-        var _title = 'Ký số token Plugin';
-        that.log('_url: ' + _url);
-        //that.openPopup(_url,_title,w,h);
-        that.openModal(_url);
+        // that.log('Bắt đầu ký token...');
+        // that.log('baseUrl: ' + baseUrl);
+        // that.log('rptCode: ' + rptCode);
+        // that.log('urlFile: ' + urlFile);
+        // that.log('type: ' + type);
+        // that.log('token: ' + token);
+        // var _url = baseUrl + '?type=' + type + '&urlFile=' + urlFile + '&token=' + token + '&rptCode=' + rptCode + '&custom=' + custom + '&hoTen=' + hoTen + '&ma=' + ma;
+        // var _title = 'Ký số token Plugin';
+        // that.log('_url: ' + _url);
+        // //that.openPopup(_url,_title,w,h);
+        that.openModal(baseUrl);
     }
 
 
